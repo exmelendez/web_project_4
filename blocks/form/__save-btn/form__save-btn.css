@@ -1,0 +1,9 @@
+.form__save-btn {
+  width: 100%;
+  margin: 48px 0 0 0;
+  padding: 18px 0;
+
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}

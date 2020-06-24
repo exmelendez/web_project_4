@@ -1,0 +1,13 @@
+.modal__close-btn {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  font-size: 5em;
+  transform: rotate(45deg);
+
+  position: absolute;
+  top: -60px;
+  right: -55px;
+
+  cursor: pointer;
+}
