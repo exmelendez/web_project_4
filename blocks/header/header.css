@@ -1,0 +1,9 @@
+@import url(./__logo/header__logo.css);
+@import url(./__logo-link/header__logo-link.css);
+
+.header {
+  height: 74px;
+  grid-area: header;
+  border: 0;
+  border-bottom: 1px solid #545454;
+}
