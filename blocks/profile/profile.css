@@ -1,6 +1,7 @@
 @import url(./__add-btn/profile__add-btn.css);
 @import url(./__add-icon/profile__add-icon.css);
 @import url(./__avatar/profile__avatar.css);
+@import url(./__data/profile__data.css);
 @import url(./__edit-btn/profile__edit-btn.css);
 @import url(./__edit-icon/profile__edit-icon.css);
 @import url(./__info/profile__info.css);
@@ -13,4 +14,11 @@
   padding-top: 40px;
 
   color: #fff;
+}
+
+@media screen and (max-width: 900px) {
+  .profile {
+    flex-direction: column;
+    align-items: center;
+  }
 }

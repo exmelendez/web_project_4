@@ -7,3 +7,9 @@
   margin: 0 31px 0 0;
   padding: 0;
 }
+
+@media screen and (max-width: 900px) {
+  .profile__name {
+    font-size: 32px;
+  }
+}

@@ -2,6 +2,7 @@
 @import url(./__logo-link/header__logo-link.css);
 
 .header {
+  width: 100%;
   height: 74px;
   grid-area: header;
   border: 0;
