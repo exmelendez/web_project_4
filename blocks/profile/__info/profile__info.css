@@ -5,7 +5,6 @@
 @media screen and (max-width: 600px) {
   .profile__info {
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
   }
 }

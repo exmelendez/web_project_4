@@ -1,3 +1,9 @@
 .profile__add-icon {
-  /* STUFF HERE */
+  height: 22px;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__add-icon {
+    height: 16px;
+  }
 }
