@@ -7,4 +7,10 @@
 
   margin: 0;
   padding: 0;
+
+  transition: opacity 0.3s ease-out;
+}
+
+.photos__love-btn:hover {
+  opacity: 0.8;
 }

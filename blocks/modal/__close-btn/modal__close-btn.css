@@ -10,4 +10,10 @@
   right: -55px;
 
   cursor: pointer;
+
+  transition: opacity 0.3s ease-out;
+}
+
+.modal__close-btn:hover {
+  opacity: 0.8;
 }

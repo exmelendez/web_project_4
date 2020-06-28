@@ -23,4 +23,10 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .page {
+    max-width: 282px;
+  }
+}
+
 /* TODO confirm that media queries is correct */

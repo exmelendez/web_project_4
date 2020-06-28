@@ -1,4 +1,13 @@
 .footer {
   grid-area: footer;
   color: #545454;
+
+  padding: 66px 0 0 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .footer {
+    padding-top: 48px;
+  }
 }

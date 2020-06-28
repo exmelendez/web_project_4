@@ -9,4 +9,17 @@
 
   margin: 0;
   padding: 0;
+
+  transition: opacity 0.3s ease-out;
+}
+
+.profile__edit-btn:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__edit-btn {
+    width: 18px;
+    height: 18px;
+  }
 }
