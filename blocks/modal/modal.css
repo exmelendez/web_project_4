@@ -1,6 +1,6 @@
-@import url(./__close-btn/modal__close-btn.css);
-@import url(./__container/modal__container.css);
-@import url(./__title/modal__title.css);
+@import url('./__close-btn/modal__close-btn.css');
+@import url('./__container/modal__container.css');
+@import url('./__title/modal__title.css');
 
 .modal {
   position: fixed;

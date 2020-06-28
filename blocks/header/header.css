@@ -1,5 +1,5 @@
-@import url(./__logo/header__logo.css);
-@import url(./__logo-link/header__logo-link.css);
+@import url('./__logo/header__logo.css');
+@import url('./__logo-link/header__logo-link.css');
 
 .header {
   width: 100%;
