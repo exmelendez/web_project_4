@@ -1,14 +1,15 @@
 @import url('./__add-btn/profile__add-btn.css');
-@import url('./__add-icon/profile__add-icon.css');
 @import url('./__avatar/profile__avatar.css');
-@import url('./__data/profile__data.css');
 @import url('./__edit-btn/profile__edit-btn.css');
-@import url('./__edit-icon/profile__edit-icon.css');
+@import url('./__edit-container/profile__edit-container.css');
 @import url('./__info/profile__info.css');
 @import url('./__name/profile__name.css');
 @import url('./__title/profile__title.css');
 
 .profile {
+  height: 120px;
+  width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,7 +20,11 @@
 
 @media screen and (max-width: 900px) {
   .profile {
+    height: 328px;
+    padding-top: 42px;
+
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
   }
 }

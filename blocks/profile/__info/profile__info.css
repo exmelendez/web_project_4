@@ -1,10 +1,17 @@
 .profile__info {
-  display: flex;
+  width: 582px;
+}
+
+@media screen and (max-width: 900px) {
+  .profile__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media screen and (max-width: 600px) {
   .profile__info {
-    flex-direction: column;
-    align-items: center;
+    width: 282px;
   }
 }

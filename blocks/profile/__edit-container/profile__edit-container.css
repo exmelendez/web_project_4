@@ -1,0 +1,10 @@
+.profile__edit-container {
+  margin: 0 0 0 24px;
+  padding-bottom: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .profile__edit-container {
+    margin-left: 12px;
+  }
+}
