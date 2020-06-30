@@ -7,10 +7,9 @@ const proTitleField = document.querySelector('.profile__title');
 const nameInput = document.querySelector('.form__input_type_name');
 const titleInput = document.querySelector('.form__input_type_title');
 
-toggleModal = () => {
+const toggleModal = () => {
   modal.classList.toggle('modal_is-open');
   if(modal.classList.contains('modal_is-open')) {
-    let test = document.querySelector('.profile__name').value;
     nameInput.value = proNameField.textContent;
     titleInput.value = proTitleField.textContent;
   }
