@@ -1,11 +1,5 @@
 @import url('./__grid/photos__grid.css');
 @import url('./__image/photos__image.css');
-@import url('./__image/_bald/photos__image_bald.css');
-@import url('./__image/_braies/photos__image_braies.css');
-@import url('./__image/_latemar/photos__image_latemar.css');
-@import url('./__image/_louise/photos__image_louise.css');
-@import url('./__image/_vanois/photos__image_vanois.css');
-@import url('./__image/_yosemite/photos__image_yosemite.css');
 @import url('./__item/photos__item.css');
 @import url('./__item-info/photos__item-info.css');
 @import url('./__love-btn/photos__love-btn.css');
