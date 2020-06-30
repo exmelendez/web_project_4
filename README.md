@@ -25,3 +25,5 @@ This is a single page project title *Around The U.S.* The page is an interactive
 **Sample Image**
 
 ![Screen shot of page](./images/sample_final-min.png)
+
+![Screen shot of modal](./images/sample_modal-min.png)
