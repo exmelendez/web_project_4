@@ -3,10 +3,11 @@
   color: #fff;
   border: none;
   font-size: 5em;
+  font-weight: 400;
   transform: rotate(45deg);
 
   position: absolute;
-  top: -60px;
+  top: -70px;
   right: -55px;
 
   cursor: pointer;
