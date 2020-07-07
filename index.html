@@ -22,9 +22,9 @@
 
       <div class="profile__info">
         <p class="profile__name">Jacques Cousteau
-            <button class="profile__edit-btn"></button>
+          <button class="profile__edit-btn"></button>
         </p>
-        
+
         <p class="profile__title">Explorer</p>
       </div>
 
@@ -32,63 +32,7 @@
     </section>
 
     <section class="photos">
-      <ul class="photos__grid">
-
-        <li class="photos__item">
-          <div class="photos__image" style="background-image: url('./images/yosemite_cover-min.jpg');"></div>
-
-          <div class="photos__item-info">
-            <p class="photos__title">Yosemite Valley</p>
-            <button class="photos__love-btn"></button>
-          </div>
-        </li>
-        
-        <li class="photos__item">
-          <div class="photos__image" style="background-image: url('./images/louise_cover-min.jpg');"></div>
-
-          <div class="photos__item-info">
-            <p class="photos__title">Lake Louise</p>
-            <button class="photos__love-btn"></button>
-          </div>
-        </li>
-        
-        <li class="photos__item">
-          <div class="photos__image" style="background-image: url('./images/bald-mountains_cover-min.jpg');"></div>
-          
-          <div class="photos__item-info">
-            <p class="photos__title">Bald Mountains</p>
-            <button class="photos__love-btn"></button>
-          </div>
-        </li>
-        
-        <li class="photos__item">
-          <div class="photos__image" style="background-image: url('./images/latemar_cover-min.jpg');"></div>
-
-          <div class="photos__item-info">
-            <p class="photos__title">Latemar</p>
-            <button class="photos__love-btn"></button>
-          </div>
-        </li>
-        
-        <li class="photos__item">
-          <div class="photos__image" style="background-image: url('./images/vanois_cover-min.jpg');"></div>
-
-          <div class="photos__item-info">
-            <p class="photos__title">Vanois National...</p>
-            <button class="photos__love-btn"></button>
-          </div>
-        </li>
-        
-        <li class="photos__item">
-          <div class="photos__image" style="background-image: url('./images/lago-di-braies_cover-min.jpg');"></div>
-
-          <div class="photos__item-info">
-            <p class="photos__title">Lago di Braies</p>
-            <button class="photos__love-btn"></button>
-          </div>
-        </li>
-       
-      </ul>
+      <ul class="photos__grid"></ul>
     </section>
   </main>
 
@@ -110,6 +54,17 @@
     </div>
   </div>
 
+  <template class="card-template">
+    <li class="photos__item">
+      <div class="photos__image"></div>
+
+      <div class="photos__item-info">
+        <p class="photos__title"></p>
+        <button class="photos__love-btn"></button>
+      </div>
+    </li>
+  </template>
   <script src="index.js"></script>
 </body>
+
 </html>
