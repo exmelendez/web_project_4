@@ -1,16 +1,17 @@
-.photos__love-btn {
-  display:inline-block;
-  width: 20.76px;
-  height: 18.13px;
+.photos__delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15%;
+  height: 15%;
 
-  background-image: url('../../../images/heart.svg');
+  background-image: url('../../../images/trash.svg');
   background-repeat: no-repeat;
   background-position: center;
 
   border: none;
   background-color: transparent;
   cursor: pointer;
-  fill: red;
 
   margin: 0;
   padding: 0;
@@ -18,6 +19,6 @@
   transition: opacity 0.3s ease-out;
 }
 
-.photos__love-btn:hover {
-  opacity: 0.5;
+.photos__delete-btn:hover {
+  opacity: 0.8;
 }

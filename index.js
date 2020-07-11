@@ -1,30 +1,68 @@
 const editButton = document.querySelector('.profile__edit-btn');
 const closeButton = document.querySelector('.modal__close-btn');
-const modal = document.querySelector('.modal');
+const editProfileModal = document.querySelector('.modal_type_edit-profile');
+const addCardModal = document.querySelector('.modal_type_add-card');
+const imageModal = document.querySelector('.modal_type_image');
 const form = document.querySelector('.form');
 const proNameField = document.querySelector('.profile__name');
 const proTitleField = document.querySelector('.profile__title');
 const nameInput = document.querySelector('.form__input_type_name');
 const titleInput = document.querySelector('.form__input_type_title');
 
-const toggleModal = () => {
+const addCardButtonOpenModal = document.querySelector(".profile__add-btn");
+const closeAddCardButton = addCardModal.querySelector(".modal__close-btn");
+
+const modalProfileRender = () => {
+  const formData = {
+    name: document.querySelector(".profile__name").textContent.trim(),
+    title: document.querySelector(".profile__title").textContent
+  };
+
+  return formData;
+};
+
+const modalAddCardRender = () => {
+
+};
+
+const modalImageOpenRender = () => {
+
+};
+
+
+addCardButtonOpenModal.addEventListener("click", () => {
+  toggleModal(addCardModal);
+});
+
+closeAddCardButton.addEventListener("click", () => {
+  toggleModal(addCardModal);
+});
+
+const toggleModal = (modal) => {
   modal.classList.toggle('modal_is-open');
+  /*
   if (modal.classList.contains('modal_is-open')) {
     nameInput.value = proNameField.textContent;
     titleInput.value = proTitleField.textContent;
   }
+  */
 };
 
-editButton.addEventListener('click', toggleModal);
-closeButton.addEventListener('click', toggleModal);
-
-form.addEventListener('submit', (e) => {
-  e.preventDefault(); //by default a submit refreshes page, this prevents this behavior
-
+const formSubmitHandler = (e) => {
+  e.preventDefault();
   proNameField.textContent = nameInput.value;
   proTitleField.textContent = titleInput.value;
+  toggleModal(editProfileModal);
+};
 
-  toggleModal();
+form.addEventListener('submit', formSubmitHandler);
+
+editButton.addEventListener('click', () => {
+  toggleModal(editProfileModal);
+});
+
+closeButton.addEventListener('click', () => {
+  toggleModal(editProfileModal);
 });
 
 const initialCards = [
@@ -77,6 +115,7 @@ initialCards.forEach((data) => {
 
   cardImage.addEventListener("click", () => {
     //open image modal
+    toggleModal(imageModal);
   });
 
   list.prepend(cardElement);
