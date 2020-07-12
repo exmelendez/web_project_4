@@ -190,6 +190,28 @@ const formHandler = (e) => {
     removeModal();
 };
 
+const cardLikeHandler = (e) => {
+    e.target.classList.toggle('photos__love-btn_liked');
+
+    /* Find innerText/title of card */
+    let cardTitle = e.path[1].childNodes[1].innerText;
+
+    /* Determine if card title was programmatically altered due to length, alter if '.' found */
+    if(cardTitle.includes('.')) {
+        cardTitle = cardTitle.slice(0, -3);
+    }
+
+    /* Find index of card object in array */
+    const cardIndex = initialCards.findIndex(card => card.name.includes(cardTitle));
+
+    /* determine state of "like" property and toggle boolean */
+    if(initialCards[cardIndex].like) {
+        initialCards[cardIndex].like = false;
+    } else {
+        initialCards[cardIndex].like = true;
+    }
+};
+
 /******
  * IMAGE CARDS RENDER
  */
@@ -224,9 +246,15 @@ const cardCreator = (title, url) => {
         //remove card
     });
 
+    cardLikeButton.addEventListener("click", cardLikeHandler);
+
+    /*
     cardLikeButton.addEventListener("click", () => {
         //ToggleCardState
+        cardLikeButton.classList.toggle('photos__love-btn_liked');
+        listLikeModifier();
     });
+    */
 
     cardImage.addEventListener("click", () => {
         //open image modal
