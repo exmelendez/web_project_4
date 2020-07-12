@@ -1,29 +1,37 @@
 const profileEditBtn = document.querySelector(".profile__edit-btn");
 const addCardBtn = document.querySelector(".profile__add-btn");
+const cardList = document.querySelector(".photos__grid");
+
 const initialCards = [
     {
         name: "Lago di Braies",
-        link: "https://code.s3.yandex.net/web-code/lago.jpg"
+        link: "https://code.s3.yandex.net/web-code/lago.jpg",
+        like: false
     },
     {
         name: "Vanois National Park",
-        link: "https://code.s3.yandex.net/web-code/vanois.jpg"
+        link: "https://code.s3.yandex.net/web-code/vanois.jpg",
+        like: false
     },
     {
         name: "Latemar",
-        link: "https://code.s3.yandex.net/web-code/latemar.jpg"
+        link: "https://code.s3.yandex.net/web-code/latemar.jpg",
+        like: false
     },
     {
         name: "Bald Mountains",
-        link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
+        link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg",
+        like: false
     },
     {
         name: "Lake Louise",
-        link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
+        link: "https://code.s3.yandex.net/web-code/lake-louise.jpg",
+        like: false
     },
     {
         name: "Yosemite Valley",
-        link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
+        link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
+        like: false
     }
 ];
 
@@ -67,8 +75,9 @@ const modalProfileRender = (modalElement) => {
     let inputData = modalProfileData();
 
     formInputs[0].setAttribute("value", inputData.name);
-    formInputs[1].setAttribute("placeholder", "Title");
+    formInputs[1].setAttribute("type", "text");
     formInputs[1].setAttribute("name", "title");
+    formInputs[1].setAttribute("placeholder", "Title");
     formInputs[1].setAttribute("value", inputData.title);
 
     appendModalToDom(modalElement);
@@ -84,7 +93,8 @@ const modalAddRender = (modalElement) => {
     formElement.classList.add("form-add");
 
     const formInputs = modalElement.querySelectorAll(".form__input");
-    formInputs[1].setAttribute("name", "title");
+    formInputs[1].setAttribute("type", "url");
+    formInputs[1].setAttribute("name", "url");
     formInputs[1].setAttribute("placeholder", "Link");
 
     appendModalToDom(modalElement);
@@ -122,7 +132,6 @@ const modalRender = (e) => {
         // Create Form Input #2
         const modalInput2 = document.createElement("input");
         modalInput2.classList.add("form__input");
-        modalInput2.setAttribute("type", "text");
 
         // Create Form Save Button
         const modalSaveBtn = document.createElement("button");
@@ -147,15 +156,19 @@ const modalRender = (e) => {
 
 };
 
+const addCard = (title, url) => {
+    const cardElement = cardCreator(title, url);
+    cardList.prepend(cardElement);
+};
+
 const formHandler = (e) => {
     e.preventDefault();
     const classNames = e.target.classList;
+    const formInputs = document.querySelectorAll(".form__input");
 
     if (classNames[classNames.length - 1] === "form-profile") {
         const profileName = document.querySelector(".profile__name");
         const profileTitle = document.querySelector(".profile__title");
-
-        const formInputs = document.querySelectorAll(".form__input");
 
         profileName.textContent = formInputs[0].value;
         const editBtn = document.createElement("button");
@@ -165,7 +178,13 @@ const formHandler = (e) => {
 
         profileTitle.textContent = formInputs[1].value;
     } else if (classNames[classNames.length - 1] === "form-add") {
-        console.log("you have clicked the save for add");
+        if(formInputs[0].value.length > 0 && formInputs[1].value.length > 0) {
+            const title = formInputs[0].value;
+            const imageUrl = formInputs[1].value;
+
+            initialCards.push({name: title, link: imageUrl, like: false});
+            addCard(title, imageUrl);
+        }
     }
 
     removeModal();
@@ -176,7 +195,7 @@ const formHandler = (e) => {
  */
 
 //  function that trims string in photo card in order to mantain style uniformity
-const stringTrimmer = (string) => {
+const stringTrimmer = string => {
     if(string.length > 18) {
         string = string.slice(0, 15) + "...";
     }
@@ -184,17 +203,22 @@ const stringTrimmer = (string) => {
     return string;
 };
 
-initialCards.forEach((data) => {
+/* Takes string URL as argument, confirms that it ends in jpg or png */
+const imageUrlConfirm = imageURL => {
+    const modString = imageURL.toLowerCase();
+    return modString.length > 5 && modString.substring(imageURL.length -3) === "jpg" || modString.substring(imageURL.length -3) === "png" || modString.substring(imageURL.length - 4) === "jpeg";
+};
+
+const cardCreator = (title, url) => {
     const cardTemplate = document.querySelector(".card-template").content.querySelector(".photos__item");
-    const list = document.querySelector(".photos__grid");
     const cardElement = cardTemplate.cloneNode(true);
     const cardImage = cardElement.querySelector(".photos__image");
     const cardTitle = cardElement.querySelector(".photos__title");
     const cardLikeButton = cardElement.querySelector(".photos__love-btn");
     const cardDeleteButton = cardElement.querySelector(".photos__delete-btn");
 
-    cardTitle.textContent = stringTrimmer(data.name);
-    cardImage.style.backgroundImage = `url(${data.link})`;
+    cardTitle.textContent = stringTrimmer(title);
+    cardImage.style.backgroundImage = `url(${url})`;
 
     cardDeleteButton.addEventListener("click", () => {
         //remove card
@@ -209,8 +233,21 @@ initialCards.forEach((data) => {
         toggleModal(imageModal);
     });
 
-    list.prepend(cardElement);
-});
+    return cardElement;
+
+};
+
+const photoCardRender = () => {
+    initialCards.forEach((data) => {
+
+        if(imageUrlConfirm(data.link)) {
+            const cardElement = cardCreator(data.name, data.link);
+            cardList.prepend(cardElement);
+        }
+    });
+};
+
+photoCardRender();
 
 /***
  * 
