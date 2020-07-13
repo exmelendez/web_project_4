@@ -102,15 +102,33 @@ const modalAddRender = (modalElement) => {
     closeModalBtnActivate();
 };
 
+const modalImageRender = modalElement => {
+    appendModalToDom(modalElement);
+    openModal();
+    closeModalBtnActivate();
+};
+
 const modalRender = (e) => {
     const modalType = e.toElement.className;
     const modalTemplate = document.querySelector(".modal-template").content.querySelector(".modal");
     const modalElement = modalTemplate.cloneNode(true);
+    const modalContainer = modalElement.querySelector(".modal__container");
 
-    if (modalType === ".photos__image") {
-        // TODO code image modal
+    if (modalType === "photos__image") {
+        // console.log("card title:", e.path[1].childNodes[5].childNodes[1].innerText);
+        const imageUrl = e.path[0].style.backgroundImage;
+        const imageTitle = e.path[1].childNodes[5].childNodes[1].innerText;
+
+        const titleElement = document.createElement('p');
+        titleElement.textContent = imageTitle;
+        titleElement.classList.add("modal__image-title");
+        modalContainer.append(titleElement);
+
+        modalContainer.style.backgroundImage = imageUrl;
+        modalContainer.classList.toggle('modal__container_size-image');
+
+        modalImageRender(modalElement);
     } else {
-        const modalContainer = modalElement.querySelector(".modal__container");
 
         // Create Modal Title
         const modalTitleElem = document.createElement("h2");
@@ -276,11 +294,7 @@ const cardCreator = (title, url) => {
 
     cardDeleteButton.addEventListener("click", cardRemoveHandler);
     cardLikeButton.addEventListener("click", cardLikeHandler);
-
-    cardImage.addEventListener("click", () => {
-        //open image modal
-        toggleModal(imageModal);
-    });
+    cardImage.addEventListener("click", modalRender);
 
     return cardElement;
 };
