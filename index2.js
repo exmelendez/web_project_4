@@ -37,16 +37,25 @@ const initialCards = [
 
 const removeModal = () => {
     const modal = document.querySelector(".modal");
-    modal.remove();
+    modal.classList.add("modal_is-closed");
+    setTimeout(() => {
+        modal.remove();
+    },1000);
+};
+
+const requestAnimationFrame = () => {
+    const modal = document.querySelector(".modal");
+    modal.classList.remove("modal_is-closed");
 };
 
 const openModal = () => {
     const modalDiv = document.querySelector(".modal");
-    modalDiv.classList.toggle('modal_is-open');
+    setTimeout(requestAnimationFrame, 0);
 };
 
 const appendModalToDom = (modal) => {
     const body = document.querySelector(".page");
+    modal.classList.add('modal_is-closed');
     body.append(modal);
 };
 
@@ -115,7 +124,6 @@ const modalRender = (e) => {
     const modalContainer = modalElement.querySelector(".modal__container");
 
     if (modalType === "photos__image") {
-        // console.log("card title:", e.path[1].childNodes[5].childNodes[1].innerText);
         const imageUrl = e.path[0].style.backgroundImage;
         const imageTitle = e.path[1].childNodes[5].childNodes[1].innerText;
 

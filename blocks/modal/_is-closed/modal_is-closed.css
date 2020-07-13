@@ -1,4 +1,4 @@
 /* imported direct to index.css */
-.modal_is-open {
-  display: flex;
+.modal_is-closed {
+  opacity: 0;
 }
