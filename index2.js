@@ -108,7 +108,7 @@ const modalRender = (e) => {
     const modalElement = modalTemplate.cloneNode(true);
 
     if (modalType === ".photos__image") {
-        // CODE HERE
+        // TODO code image modal
     } else {
         const modalContainer = modalElement.querySelector(".modal__container");
 
@@ -190,19 +190,44 @@ const formHandler = (e) => {
     removeModal();
 };
 
-const cardLikeHandler = (e) => {
-    e.target.classList.toggle('photos__love-btn_liked');
+/**
+ * Using event object locates the name of the card
+ * @param {Object} e Event object
+ * @return {String}  Title of card
+ */
+const getCardTitle = (e) => {
+    const elemClassName = e.srcElement.classList[0];
+    let cardTitle;
 
-    /* Find innerText/title of card */
-    let cardTitle = e.path[1].childNodes[1].innerText;
+    if(elemClassName === "photos__love-btn") {
+        cardTitle = e.path[1].childNodes[1].innerText;
 
+    } else if(elemClassName === "photos__delete-btn") {
+        cardTitle = e.path[1].childNodes[5].childNodes[1].innerText;
+    }
+    
     /* Determine if card title was programmatically altered due to length, alter if '.' found */
     if(cardTitle.includes('.')) {
         cardTitle = cardTitle.slice(0, -3);
     }
 
-    /* Find index of card object in array */
-    const cardIndex = initialCards.findIndex(card => card.name.includes(cardTitle));
+    return cardTitle;
+};
+
+/**
+ * Iterate through card list array to find index number of string argument
+ * @param {String} cardTitle String title of card
+ * @return {Number}          Array index
+ */
+const getCardIndex = cardTitle => {
+    let cardIndex = initialCards.findIndex(card => card.name.includes(cardTitle));
+    return cardIndex;
+};
+
+const cardLikeHandler = e => {
+    e.target.classList.toggle('photos__love-btn_liked');
+    const cardTitle = getCardTitle(e);
+    const cardIndex = getCardIndex(cardTitle);
 
     /* determine state of "like" property and toggle boolean */
     if(initialCards[cardIndex].like) {
@@ -211,6 +236,13 @@ const cardLikeHandler = (e) => {
         initialCards[cardIndex].like = true;
     }
 };
+
+const cardRemoveHandler = e => {
+    const cardTitle = getCardTitle(e);
+    const cardIndex = getCardIndex(cardTitle);
+    initialCards.splice(cardIndex, 1);
+    e.path[1].remove();
+}
 
 /******
  * IMAGE CARDS RENDER
@@ -242,19 +274,8 @@ const cardCreator = (title, url) => {
     cardTitle.textContent = stringTrimmer(title);
     cardImage.style.backgroundImage = `url(${url})`;
 
-    cardDeleteButton.addEventListener("click", () => {
-        //remove card
-    });
-
+    cardDeleteButton.addEventListener("click", cardRemoveHandler);
     cardLikeButton.addEventListener("click", cardLikeHandler);
-
-    /*
-    cardLikeButton.addEventListener("click", () => {
-        //ToggleCardState
-        cardLikeButton.classList.toggle('photos__love-btn_liked');
-        listLikeModifier();
-    });
-    */
 
     cardImage.addEventListener("click", () => {
         //open image modal
@@ -262,7 +283,6 @@ const cardCreator = (title, url) => {
     });
 
     return cardElement;
-
 };
 
 const photoCardRender = () => {
