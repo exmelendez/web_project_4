@@ -3,7 +3,7 @@
 
 ### **Overview**
 
-This is a single page project title *Around The U.S.* The page is an interactive page where users can add, remove or like photos, while also updating their profile information with a modal.
+This is a single page project title *Around The U.S.* The page is an interactive page where users can add, remove or like photos, while also updating their profile information.
 
 ### Technologies/Languages Used
 * Figma
