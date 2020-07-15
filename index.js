@@ -1,6 +1,18 @@
 const profileEditBtn = document.querySelector(".profile__edit-btn");
 const addCardBtn = document.querySelector(".profile__add-btn");
+const editProfileModal = document.querySelector(".modal-edit-profile");
+const addCardModal = document.querySelector(".modal-add-card");
+const imageViewModal = document.querySelector(".modal-view-image");
+const editModalCloseBtn = document.querySelector(".modal-profile-close");
+const addModalCloseBtn = document.querySelector(".modal-add-close");
+const imageModalCloseBtn = document.querySelector(".modal-image-close");
+const editProfileForm = document.querySelector(".form_edit-profile");
+const addCardForm = document.querySelector(".form_add-card");
 const cardList = document.querySelector(".photos__grid");
+const profileNameInput = document.querySelector(".form__input-profile-name");
+const profileTitleInput = document.querySelector(".form__input-profile-title");
+const pageDisplayName = document.querySelector(".profile__name");
+const pageDisplayTitle = document.querySelector(".profile__title");
 
 const initialCards = [
     {
@@ -35,6 +47,10 @@ const initialCards = [
     }
 ];
 
+const toggleModalWindow = modal => {
+    modal.classList.toggle("modal_is-closed");
+};
+
 /**
  * adds class to modal to make visibility hidden, then after set time will remove modal element from DOM
  */
@@ -47,36 +63,10 @@ const removeModal = () => {
 };
 
 /**
- * Removes "modal_is-closed" class from modal
- */
-const removeModalCloseClass = () => {
-    const modal = document.querySelector(".modal");
-    modal.classList.remove("modal_is-closed");
-};
-
-/**
  * Calls "removeModalCloseClass" function after set time to create smooth transition effect
  */
 const openModal = () => {
     setTimeout(removeModalCloseClass, 0);
-};
-
-/**
- * Takes modal HTML node/Object as argument adds the "modal_is-closed" class then appends to body
- * @param {Object} modal HTML Element
- */
-const appendModalToDom = (modal) => {
-    const body = document.querySelector(".page");
-    modal.classList.add('modal_is-closed');
-    body.append(modal);
-};
-
-/**
- * Assigns event listener to modal close btn
- */
-const closeModalBtnActivate = () => {
-    const closeModalBtn = document.querySelector(".modal__close-btn");
-    closeModalBtn.addEventListener("click", removeModal);
 };
 
 /**
@@ -93,65 +83,10 @@ const modalProfileData = () => {
 };
 
 /**
- * Creates the modal for profile edit then calls functions to open it
- * @param {Object} modalElement Modal HTML/Node
- */
-const modalProfileRender = modalElement => {
-    const modalTitle = modalElement.querySelector(".modal__title");
-    modalTitle.textContent = "Edit profile";
-
-    const formElement = modalElement.querySelector(".form");
-    formElement.classList.add("form-profile");
-
-    const formInputs = modalElement.querySelectorAll(".form__input");
-    let inputData = modalProfileData();
-
-    formInputs[0].setAttribute("value", inputData.name);
-    formInputs[1].setAttribute("type", "text");
-    formInputs[1].setAttribute("name", "title");
-    formInputs[1].setAttribute("placeholder", "Title");
-    formInputs[1].setAttribute("value", inputData.title);
-
-    appendModalToDom(modalElement);
-    openModal();
-    closeModalBtnActivate();
-};
-
-/**
- * Creates the modal for card add then calls functions to open it
- * @param {Object} modalElement Modal HTML/Node
- */
-const modalAddRender = modalElement => {
-    const modalTitle = modalElement.querySelector(".modal__title");
-    modalTitle.textContent = "New place";
-
-    const formElement = modalElement.querySelector(".form");
-    formElement.classList.add("form-add");
-
-    const formInputs = modalElement.querySelectorAll(".form__input");
-    formInputs[1].setAttribute("type", "url");
-    formInputs[1].setAttribute("name", "url");
-    formInputs[1].setAttribute("placeholder", "Link");
-
-    appendModalToDom(modalElement);
-    openModal();
-    closeModalBtnActivate();
-};
-
-/**
- * Creates the modal for iage view then calls functions to open it
- * @param {Object} modalElement Modal HTML/Node
- */
-const modalImageRender = modalElement => {
-    appendModalToDom(modalElement);
-    openModal();
-    closeModalBtnActivate();
-};
-
-/**
  * Creates modal HTML/Node based on event by the button that caused the action
  * @param {Object} e Event Object
  */
+/*
 const modalRender = e => {
     const modalType = e.toElement.className;
     const modalTemplate = document.querySelector(".modal-template").content.querySelector(".modal");
@@ -216,6 +151,7 @@ const modalRender = e => {
     }
 
 };
+*/
 
 /**
  * Given string arguments it will call the cardCreator function then prepend the card to the other cards
@@ -231,7 +167,26 @@ const addCard = (title, url) => {
  * Will take modal inout data and mod page profile or add a new card, will also call the function to close/remove the modal.
  * @param {Object} e Event Object
  */
-const formHandler = e => {
+const editFormHandler = e => {
+    e.preventDefault();
+    pageDisplayName.textContent = profileNameInput.value;
+    const editBtn = document.createElement("button");
+    editBtn.classList.add("profile__edit-btn");
+    editBtn.addEventListener("click", () => {
+        toggleModalWindow(editProfileModal);
+    });
+    pageDisplayName.append(editBtn);
+    pageDisplayTitle.textContent = profileTitleInput.value;
+    toggleModalWindow(editProfileModal);
+    // console.log("entered edit form handler");
+
+    /*
+    if(modal.classList.contains("modal-edit-profile")) {
+        console.log("clicked save btn for edit");
+    } else if(modal.classList.contains("modal-add-card")) {
+
+    }
+
     e.preventDefault();
     const classNames = e.target.classList;
     const formInputs = document.querySelectorAll(".form__input");
@@ -257,6 +212,7 @@ const formHandler = e => {
         }
     }
     removeModal();
+    */
 };
 
 /**
@@ -292,34 +248,6 @@ const getCardIndex = cardTitle => {
     let cardIndex = initialCards.findIndex(card => card.name.includes(cardTitle));
     return cardIndex;
 };
-
-/**
- * Toggles class in card item to display filled/liked heart will also modify the value/state of like in the array of cards
- * @param {Object} e Event Object
- */
-const cardLikeHandler = e => {
-    e.target.classList.toggle('photos__love-btn_liked');
-    const cardTitle = getCardTitle(e);
-    const cardIndex = getCardIndex(cardTitle);
-
-    /* determine state of "like" property and toggle boolean */
-    if(initialCards[cardIndex].like) {
-        initialCards[cardIndex].like = false;
-    } else {
-        initialCards[cardIndex].like = true;
-    }
-};
-
-/**
- * Using event object finds card title/index from array and will remove from card array list and from DOM
- * @param {Object} e Event Object
- */
-const cardRemoveHandler = e => {
-    const cardTitle = getCardTitle(e);
-    const cardIndex = getCardIndex(cardTitle);
-    initialCards.splice(cardIndex, 1);
-    e.path[1].remove();
-}
 
 /**
  * Takes string and if longer than 18 characters will trim to 15 characters and add three periods after
@@ -361,9 +289,19 @@ const cardCreator = (title, url) => {
     cardTitle.textContent = stringTrimmer(title);
     cardImage.style.backgroundImage = `url(${url})`;
 
-    cardDeleteButton.addEventListener("click", cardRemoveHandler);
-    cardLikeButton.addEventListener("click", cardLikeHandler);
-    cardImage.addEventListener("click", modalRender);
+    cardDeleteButton.addEventListener("click", () => {
+        cardElement.remove();
+    });
+
+    cardLikeButton.addEventListener("click", () => {
+        cardLikeButton.classList.toggle("photos__love-btn_liked");
+    });
+
+    cardImage.addEventListener("click", () => {
+        document.querySelector(".modal__container_size-image").style.backgroundImage = `url(${url})`;
+        document.querySelector(".modal__image-title").textContent = title;
+        document.querySelector(".modal-view-image").classList.toggle("modal_is-closed");
+    });
 
     return cardElement;
 };
@@ -373,14 +311,41 @@ const cardCreator = (title, url) => {
  */
 const photoCardRender = () => {
     initialCards.forEach((data) => {
-
-        if(imageUrlConfirm(data.link)) {
-            const cardElement = cardCreator(data.name, data.link);
-            cardList.prepend(cardElement);
-        }
+        const cardElement = cardCreator(data.name, data.link);
+        cardList.prepend(cardElement);
     });
 };
 
 photoCardRender();
-profileEditBtn.addEventListener("click", modalRender);
-addCardBtn.addEventListener("click", modalRender);
+
+profileEditBtn.addEventListener("click", () => {
+    const profileDisplayName = pageDisplayName.textContent.trim();
+    const profileTitle = pageDisplayTitle.textContent;
+
+    profileNameInput.value = profileDisplayName;
+    profileTitleInput.value = profileTitle;
+
+    toggleModalWindow(editProfileModal);
+});
+addCardBtn.addEventListener("click", () => {
+    toggleModalWindow(addCardModal);
+});
+editModalCloseBtn.addEventListener("click", () => {
+    toggleModalWindow(editProfileModal);
+});
+addModalCloseBtn.addEventListener("click", () => {
+    toggleModalWindow(addCardModal);
+});
+imageModalCloseBtn.addEventListener("click", () => {
+    toggleModalWindow(imageViewModal);
+});
+editProfileForm.addEventListener('submit', editFormHandler);
+/*
+editProfileSaveBtn.addEventListener('click', () => {
+    console.log("save btn edit form clicked");
+});
+
+addCardSaveBtn.addEventListener("submit", () => {
+    formHandler(addCardModal);
+});
+*/

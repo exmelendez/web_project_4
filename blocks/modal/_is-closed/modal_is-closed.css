@@ -1,4 +1,5 @@
 /* imported direct to index.css */
 .modal_is-closed {
+  display: none;
   opacity: 0;
 }
