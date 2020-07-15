@@ -216,30 +216,6 @@ const editFormHandler = e => {
 };
 
 /**
- * Using event object locates the name of the card
- * @param {Object} e Event object
- * @return {String}  Title of card
- */
-const getCardTitle = e => {
-    const elemClassName = e.srcElement.classList[0];
-    let cardTitle;
-
-    if(elemClassName === "photos__love-btn") {
-        cardTitle = e.path[1].childNodes[1].innerText;
-
-    } else if(elemClassName === "photos__delete-btn") {
-        cardTitle = e.path[1].childNodes[5].childNodes[1].innerText;
-    }
-    
-    /* Determine if card title was programmatically altered due to length, alter if '.' found */
-    if(cardTitle.includes('.')) {
-        cardTitle = cardTitle.slice(0, -3);
-    }
-
-    return cardTitle;
-};
-
-/**
  * Iterate through card list array to find index number of string argument
  * @param {String} cardTitle String title of card
  * @return {Number}          Array index
