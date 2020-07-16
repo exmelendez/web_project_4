@@ -19,6 +19,10 @@
   align-items: center;
   justify-content: center;
 
-  transition: opacity 2000ms;
-  will-change: opacity;
+  animation: modalFade 3s;
+}
+
+@keyframes modalFade {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }

@@ -40,8 +40,14 @@
     <p class="footer__copyright">© 2020 Around The U.S.</p>
   </footer>
 
+  <!-- EDIT PROFILE BUTTON TEMPLATE -->
+  <template class="edit-btn-template">
+    <button class="profile__edit-btn"></button>
+  </template>
+
   <!-- EDIT PROFILE MODAL -->
-  <div class="modal modal-edit-profile modal_is-closed"> <!-- TODO confirm that "modal-edit-profile is correct -->
+  <div class="modal modal-edit-profile modal_is-closed">
+    <!-- TODO confirm that "modal-edit-profile is correct -->
     <div class="modal__container">
       <button class="modal__close-btn modal-profile-close">&plus;</button>
       <h2 class="modal__title">Edit profile</h2>
@@ -59,17 +65,15 @@
     <div class="modal__container">
       <button class="modal__close-btn modal-add-close">&plus;</button>
       <h2 class="modal__title">New place</h2>
-
-const cardList = document.querySelector(".photos__grid");
       <form class="form form_add-card">
-        <input class="form__input" type="text" name="title" placeholder="Title">
-        <input class="form__input" type="url" name="url" placeholder="Link">
+        <input class="form__input form__input_card-title" type="text" name="title" placeholder="Title">
+        <input class="form__input form__input_card-url" type="url" name="url" placeholder="Link">
         <button class="form__save-btn form-add-save">Save</button>
       </form>
     </div>
   </div>
 
-   <!-- IMAGE VIEW MODAL -->
+  <!-- IMAGE VIEW MODAL -->
   <div class="modal modal-view-image modal_is-closed">
     <div class="modal__container modal__container_size-image">
       <button class="modal__close-btn modal-image-close">&plus;</button>
@@ -92,4 +96,5 @@ const cardList = document.querySelector(".photos__grid");
 
   <script src="index.js"></script>
 </body>
+
 </html>
