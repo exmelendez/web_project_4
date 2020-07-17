@@ -1,18 +1,29 @@
+/* Page Modals */
+const editProfileModal = document.querySelector(".modal_type_edit-profile");
+const addCardModal = document.querySelector(".modal_type_add-card");
+const imageViewModal = document.querySelector(".modal_type_image-view");
+
+/* Buttons */
 const profileEditBtn = document.querySelector(".profile__edit-btn");
 const addCardBtn = document.querySelector(".profile__add-btn");
-const editProfileModal = document.querySelector(".modal-edit-profile");
-const addCardModal = document.querySelector(".modal-add-card");
-const imageViewModal = document.querySelector(".modal-view-image");
-const editModalCloseBtn = document.querySelector(".modal-profile-close");
-const addModalCloseBtn = document.querySelector(".modal-add-close");
-const imageModalCloseBtn = document.querySelector(".modal-image-close");
-const editProfileForm = document.querySelector(".form_edit-profile");
-const addCardForm = document.querySelector(".form_add-card");
-const cardList = document.querySelector(".photos__grid");
+const editModalCloseBtn = document.querySelector(".modal_close_profile");
+const addModalCloseBtn = document.querySelector(".modal_close_add-card");
+const imageModalCloseBtn = document.querySelector(".modal_close_image-view");
+
+/* Modal Forms */
+const editProfileForm = document.querySelector(".form_type_edit-profile");
+const addCardForm = document.querySelector(".form_type_add-card");
+
+/* Edit Profile Form Inputs */
 const profileNameInput = document.querySelector(".form__input-profile-name");
 const profileTitleInput = document.querySelector(".form__input-profile-title");
+
+/* Page Profile Data Display */
 const pageDisplayName = document.querySelector(".profile__name");
 const pageDisplayTitle = document.querySelector(".profile__title");
+
+/* Image Card Container */
+const cardList = document.querySelector(".photos__grid");
 
 const initialCards = [
     {
@@ -90,7 +101,7 @@ const cardCreator = (title, url) => {
     cardImage.addEventListener("click", () => {
         document.querySelector(".modal__container_size-image").style.backgroundImage = `url(${url})`;
         document.querySelector(".modal__image-title").textContent = title;
-        document.querySelector(".modal-view-image").classList.toggle("modal_is-closed");
+        imageViewModal.classList.toggle("modal_is-closed");
     });
 
     return cardElement;

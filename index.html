@@ -46,13 +46,12 @@
   </template>
 
   <!-- EDIT PROFILE MODAL -->
-  <div class="modal modal-edit-profile modal_is-closed">
-    <!-- TODO confirm that "modal-edit-profile is correct -->
+  <div class="modal modal_type_edit-profile modal_is-closed">
     <div class="modal__container">
-      <button class="modal__close-btn modal-profile-close" aria-label="Close popup">&plus;</button>
+      <button class="modal__close-btn modal_close_profile" aria-label="Close popup">&plus;</button>
       <h2 class="modal__title">Edit profile</h2>
 
-      <form class="form form_edit-profile">
+      <form class="form form_type_edit-profile">
         <input class="form__input form__input-profile-name" type="text" name="name" placeholder="Name">
         <input class="form__input form__input-profile-title" type="text" name="title" placeholder="Title">
         <button class="form__save-btn" type="submit" aria-label="Save form">Save</button>
@@ -61,22 +60,22 @@
   </div>
 
   <!-- ADD CARD MODAL -->
-  <div class="modal modal-add-card modal_is-closed">
+  <div class="modal modal_type_add-card modal_is-closed">
     <div class="modal__container">
-      <button class="modal__close-btn modal-add-close" aria-label="Close popup">&plus;</button>
+      <button class="modal__close-btn modal_close_add-card" aria-label="Close popup">&plus;</button>
       <h2 class="modal__title">New place</h2>
-      <form class="form form_add-card">
+      <form class="form form_type_add-card">
         <input class="form__input form__input_card-title" type="text" name="title" placeholder="Title">
         <input class="form__input form__input_card-url" type="url" name="url" placeholder="Link">
-        <button class="form__save-btn form-add-save" aria-label="Save form">Save</button>
+        <button class="form__save-btn" aria-label="Save form">Save</button>
       </form>
     </div>
   </div>
 
   <!-- IMAGE VIEW MODAL -->
-  <div class="modal modal-view-image modal_is-closed">
+  <div class="modal modal_type_image-view modal_is-closed">
     <div class="modal__container modal__container_size-image">
-      <button class="modal__close-btn modal-image-close" aria-label="Close popup">&plus;</button>
+      <button class="modal__close-btn modal_close_image-view" aria-label="Close popup">&plus;</button>
       <p class="modal__image-title"></p>
     </div>
   </div>
