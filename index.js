@@ -73,6 +73,8 @@ const cardCreator = (title, url) => {
     const cardTitle = cardElement.querySelector(".photos__title");
     const cardLikeButton = cardElement.querySelector(".photos__love-btn");
     const cardDeleteButton = cardElement.querySelector(".photos__delete-btn");
+    const imageViewModalContainer = imageViewModal.querySelector(".modal__container_size-image");
+    const imageViewModalTitle = imageViewModal.querySelector(".modal__image-title");
 
     cardTitle.textContent = title;
     cardImage.style.backgroundImage = `url(${url})`;
@@ -86,9 +88,9 @@ const cardCreator = (title, url) => {
     });
 
     cardImage.addEventListener("click", () => {
-        document.querySelector(".modal__container_size-image").style.backgroundImage = `url(${url})`;
-        document.querySelector(".modal__image-title").textContent = title;
-        imageViewModal.classList.toggle("modal_is-closed");
+        imageViewModalContainer.style.backgroundImage = `url(${url})`;
+        imageViewModalTitle.textContent = title;
+        toggleModalWindow(imageViewModal);
     });
 
     return cardElement;
