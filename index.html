@@ -22,13 +22,13 @@
 
       <div class="profile__info">
         <p class="profile__name">Jacques Cousteau
-          <button class="profile__edit-btn"></button>
+          <button class="profile__edit-btn" aria-label="Profile edit"></button>
         </p>
 
         <p class="profile__title">Explorer</p>
       </div>
 
-      <button class="profile__add-btn"></button>
+      <button class="profile__add-btn" aria-label="Add card"></button>
     </section>
 
     <section class="photos">
@@ -42,20 +42,20 @@
 
   <!-- EDIT PROFILE BUTTON TEMPLATE -->
   <template class="edit-btn-template">
-    <button class="profile__edit-btn"></button>
+    <button class="profile__edit-btn" aria-label="Profile edit"></button>
   </template>
 
   <!-- EDIT PROFILE MODAL -->
   <div class="modal modal-edit-profile modal_is-closed">
     <!-- TODO confirm that "modal-edit-profile is correct -->
     <div class="modal__container">
-      <button class="modal__close-btn modal-profile-close">&plus;</button>
+      <button class="modal__close-btn modal-profile-close" aria-label="Close popup">&plus;</button>
       <h2 class="modal__title">Edit profile</h2>
 
       <form class="form form_edit-profile">
         <input class="form__input form__input-profile-name" type="text" name="name" placeholder="Name">
         <input class="form__input form__input-profile-title" type="text" name="title" placeholder="Title">
-        <button class="form__save-btn" type="submit">Save</button>
+        <button class="form__save-btn" type="submit" aria-label="Save form">Save</button>
       </form>
     </div>
   </div>
@@ -63,12 +63,12 @@
   <!-- ADD CARD MODAL -->
   <div class="modal modal-add-card modal_is-closed">
     <div class="modal__container">
-      <button class="modal__close-btn modal-add-close">&plus;</button>
+      <button class="modal__close-btn modal-add-close" aria-label="Close popup">&plus;</button>
       <h2 class="modal__title">New place</h2>
       <form class="form form_add-card">
         <input class="form__input form__input_card-title" type="text" name="title" placeholder="Title">
         <input class="form__input form__input_card-url" type="url" name="url" placeholder="Link">
-        <button class="form__save-btn form-add-save">Save</button>
+        <button class="form__save-btn form-add-save" aria-label="Save form">Save</button>
       </form>
     </div>
   </div>
@@ -76,7 +76,7 @@
   <!-- IMAGE VIEW MODAL -->
   <div class="modal modal-view-image modal_is-closed">
     <div class="modal__container modal__container_size-image">
-      <button class="modal__close-btn modal-image-close">&plus;</button>
+      <button class="modal__close-btn modal-image-close" aria-label="Close popup">&plus;</button>
       <p class="modal__image-title"></p>
     </div>
   </div>
@@ -84,12 +84,12 @@
   <!-- CARD TEMPLATE -->
   <template class="card-template">
     <li class="photos__item">
-      <button class="photos__delete-btn"></button>
+      <button class="photos__delete-btn" aria-label="Delete card"></button>
       <div class="photos__image"></div>
 
       <div class="photos__item-info">
         <p class="photos__title"></p>
-        <button class="photos__love-btn"></button>
+        <button class="photos__love-btn" aria-label="Love"></button>
       </div>
     </li>
   </template>
