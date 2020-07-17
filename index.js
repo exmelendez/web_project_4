@@ -56,21 +56,8 @@ const initialCards = [
  * Given a modal/HTML/Node object it will toggle the class name making it so the modal is visible and invisible
  * @param {Object} modal 
  */
-const toggleModalWindow = modal => {
+const toggleModalWindow = (modal) => {
     modal.classList.toggle("modal_is-closed");
-};
-
-/**
- * Takes string and if longer than 18 characters will trim to 15 characters and add three periods after
- * @param {String} string Card title string
- * @return {String}       Card title, possibly altered
- */
-const stringTrimmer = string => {
-    if (string.length > 18) {
-        string = string.slice(0, 15) + "...";
-    }
-
-    return string;
 };
 
 /**
@@ -87,7 +74,7 @@ const cardCreator = (title, url) => {
     const cardLikeButton = cardElement.querySelector(".photos__love-btn");
     const cardDeleteButton = cardElement.querySelector(".photos__delete-btn");
 
-    cardTitle.textContent = stringTrimmer(title);
+    cardTitle.textContent = title;
     cardImage.style.backgroundImage = `url(${url})`;
 
     cardDeleteButton.addEventListener("click", () => {
@@ -112,7 +99,7 @@ const cardCreator = (title, url) => {
  * @param {String} imageURL String URL for card
  * @return {Boolean}        Boolean if string ends appropiate ext
  */
-const imageUrlConfirm = imageURL => {
+const imageUrlConfirm = (imageURL) => {
     const modString = imageURL.toLowerCase();
     return modString.length > 5 && modString.slice(0, 4) === "http" && modString.substring(imageURL.length - 3) === "jpg" || modString.substring(imageURL.length - 3) === "png" || modString.substring(imageURL.length - 4) === "jpeg";
 };
@@ -121,7 +108,7 @@ const imageUrlConfirm = imageURL => {
  * Will take edit profile input values and set as profile data, will also call the function to close/remove the modal.
  * @param {Object} e Event Object
  */
-const editFormHandler = e => {
+const editFormHandler = (e) => {
     e.preventDefault();
     pageDisplayName.textContent = profileNameInput.value;
 
@@ -140,7 +127,7 @@ const editFormHandler = e => {
  * Will take add card modal inout data and create a new card, also contains URL validation + calls function to close/remove the modal.
  * @param {Object} e Event Object
  */
-const addFormHandler = e => {
+const addFormHandler = (e) => {
     e.preventDefault();
     const cardTitle = document.querySelector(".form__input_card-title");
     const cardUrl = document.querySelector(".form__input_card-url");
