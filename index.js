@@ -18,12 +18,19 @@ const addCardForm = document.querySelector(".form_type_add-card");
 const profileNameInput = document.querySelector(".form__input-profile-name");
 const profileTitleInput = document.querySelector(".form__input-profile-title");
 
+/* Add Card Form Inputs */
+const cardModalTitleInput = document.querySelector(".form__input_card-title");
+const cardModalUrlInput = document.querySelector(".form__input_card-url");
+
 /* Page Profile Data Display */
 const pageDisplayName = document.querySelector(".profile__name");
 const pageDisplayTitle = document.querySelector(".profile__title");
 
 /* Image Card Container */
 const cardList = document.querySelector(".photos__grid");
+
+/* New Card HTML Template */
+const photoCardTemplate = document.querySelector(".card-template");
 
 const initialCards = [
     {
@@ -67,7 +74,7 @@ const toggleModalWindow = (modal) => {
  * @return {Object}      HTML/Node Object of image card
  */
 const cardCreator = (title, url) => {
-    const cardTemplate = document.querySelector(".card-template").content.querySelector(".photos__item");
+    const cardTemplate = photoCardTemplate.content.querySelector(".photos__item");
     const cardElement = cardTemplate.cloneNode(true);
     const cardImage = cardElement.querySelector(".photos__image");
     const cardTitle = cardElement.querySelector(".photos__title");
@@ -97,16 +104,6 @@ const cardCreator = (title, url) => {
 };
 
 /**
- * Takes string argument to check that it ends in "png", "jpg", or "jpeg" and starts with http
- * @param {String} imageURL String URL for card
- * @return {Boolean}        Boolean if string ends appropiate ext
- */
-const imageUrlConfirm = (imageURL) => {
-    const modString = imageURL.toLowerCase();
-    return modString.length > 5 && modString.slice(0, 4) === "http" && modString.substring(imageURL.length - 3) === "jpg" || modString.substring(imageURL.length - 3) === "png" || modString.substring(imageURL.length - 4) === "jpeg";
-};
-
-/**
  * Will take edit profile input values and set as profile data, will also call the function to close/remove the modal.
  * @param {Object} e Event Object
  */
@@ -131,17 +128,10 @@ const editFormHandler = (e) => {
  */
 const addFormHandler = (e) => {
     e.preventDefault();
-    const cardTitle = document.querySelector(".form__input_card-title");
-    const cardUrl = document.querySelector(".form__input_card-url");
 
-    if (imageUrlConfirm(cardUrl.value)) {
-        const cardElement = cardCreator(cardTitle.value, cardUrl.value);
-        cardList.prepend(cardElement);
-
-        toggleModalWindow(addCardModal);
-    } else {
-        alert("invalid url");
-    }
+    const cardElement = cardCreator(cardModalTitleInput.value, cardModalUrlInput.value);
+    cardList.prepend(cardElement);
+    toggleModalWindow(addCardModal);
 };
 
 /**
