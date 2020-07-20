@@ -110,14 +110,6 @@ const cardCreator = (title, url) => {
 const editFormHandler = (e) => {
     e.preventDefault();
     pageDisplayName.textContent = profileNameInput.value;
-
-    const editBtnTemplate = document.querySelector(".edit-btn-template").content.querySelector(".profile__edit-btn");
-    const editBtnElem = editBtnTemplate.cloneNode(true);
-
-    editBtnElem.addEventListener("click", () => {
-        toggleModalWindow(editProfileModal);
-    });
-    pageDisplayName.append(editBtnElem);
     pageDisplayTitle.textContent = profileTitleInput.value;
     toggleModalWindow(editProfileModal);
 };
@@ -147,7 +139,7 @@ const photoCardRender = () => {
 photoCardRender();
 
 profileEditBtn.addEventListener("click", () => {
-    const profileDisplayName = pageDisplayName.textContent.trim();
+    const profileDisplayName = pageDisplayName.textContent;
     const profileTitle = pageDisplayTitle.textContent;
 
     profileNameInput.value = profileDisplayName;
