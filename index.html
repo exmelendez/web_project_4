@@ -47,8 +47,12 @@
       <h2 class="modal__title">Edit profile</h2>
 
       <form class="form form_type_edit-profile">
-        <input class="form__input form__input-profile-name" type="text" name="name" placeholder="Name">
-        <input class="form__input form__input-profile-title" type="text" name="title" placeholder="Title">
+        <input id="profile-name" class="form__input form__input-profile-name" type="text" name="name" placeholder="Name" minlength="2" maxlength="40" required>
+        <span id="profile-name-error" class="form__error"></span>
+        
+        <input id="profile-title" class="form__input form__input-profile-title" type="text" name="title" placeholder="Title" minlength="2" maxlength="200" required>
+        <span id="profile-title-error" class="form__error"></span>
+
         <button class="form__save-btn" type="submit" aria-label="Save form">Save</button>
       </form>
     </div>
@@ -60,8 +64,12 @@
       <button class="modal__close-btn modal_close_add-card" aria-label="Close popup">&plus;</button>
       <h2 class="modal__title">New place</h2>
       <form class="form form_type_add-card">
-        <input class="form__input form__input_card-title" type="text" name="title" placeholder="Title">
-        <input class="form__input form__input_card-url" type="url" name="url" placeholder="Link">
+        <input id="card-title" class="form__input form__input_card-title" type="text" name="title" placeholder="Title" minlength="1" maxlength="30" required>
+        <span id="card-title-error" class="form__error"></span>
+
+        <input id="card-url" class="form__input form__input_card-url" type="url" name="url" placeholder="Link" required>
+        <span id="card-url-error" class="form__error"></span>
+
         <button class="form__save-btn" aria-label="Save form">Save</button>
       </form>
     </div>
