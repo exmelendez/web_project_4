@@ -2,6 +2,7 @@
 const editProfileModal = document.querySelector(".modal_type_edit-profile");
 const addCardModal = document.querySelector(".modal_type_add-card");
 const imageViewModal = document.querySelector(".modal_type_image-view");
+const modalList = document.querySelectorAll(".modal");
 
 /* Buttons */
 const profileEditBtn = document.querySelector(".profile__edit-btn");
@@ -31,6 +32,10 @@ const cardList = document.querySelector(".photos__grid");
 
 /* New Card HTML Template */
 const photoCardTemplate = document.querySelector(".card-template");
+
+/* Error Classes */
+const inputClassError = document.querySelector(".form__input_type_error");
+const spanClassError = document.querySelector(".form__error_visible");
 
 const initialCards = [
     {
@@ -98,6 +103,7 @@ const cardCreator = (title, url) => {
         imageViewModalContainer.style.backgroundImage = `url(${url})`;
         imageViewModalTitle.textContent = title;
         toggleModalWindow(imageViewModal);
+        imageViewModalContainer.focus();
     });
 
     return cardElement;
@@ -136,8 +142,50 @@ const photoCardRender = () => {
     });
 };
 
-photoCardRender();
+/**
+ * With HTML node passed, will remove input/span error messages when modal is closed but not saved
+ * @param {Object} modal HTML modal
+ */
+const removeErrorClasses = (modal) => {
+    const formInputs = [...modal.querySelectorAll(".form__input")];
+    const formSpans = [...modal.querySelectorAll(".form__error")];
 
+    formInputs.forEach((input) => {
+        input.classList.remove("form__input_type_error");
+    });
+
+    formSpans.forEach((span) => {
+        span.classList.remove("form__error_visible");
+    });
+};
+
+/**
+ * Enables + sets up exit of modal by overlay click or esc key
+ * @param {Object} modalList Nodelist of HTML modals w/ ".modal" class
+ */
+const enableModalExitClick = (modalList) => {
+    const modals = [...modalList];
+    modals.forEach((modal) => {
+        modal.onclick = (e) => {
+            if (e.target == modal) {
+                removeErrorClasses(modal);
+                toggleModalWindow(modal);
+            }
+        };
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains("modal_is-closed")) {
+                removeErrorClasses(modal);
+                toggleModalWindow(modal);
+            }
+        });
+    });
+};
+
+photoCardRender();
+enableModalExitClick(modalList);
+
+/* EVENT LISTENERS */
 profileEditBtn.addEventListener("click", () => {
     const profileDisplayName = pageDisplayName.textContent;
     const profileTitle = pageDisplayTitle.textContent;
@@ -146,14 +194,18 @@ profileEditBtn.addEventListener("click", () => {
     profileTitleInput.value = profileTitle;
 
     toggleModalWindow(editProfileModal);
+    profileNameInput.focus();
 });
 addCardBtn.addEventListener("click", () => {
     toggleModalWindow(addCardModal);
+    cardModalTitleInput.focus();
 });
 editModalCloseBtn.addEventListener("click", () => {
+    removeErrorClasses(editProfileModal);
     toggleModalWindow(editProfileModal);
 });
 addModalCloseBtn.addEventListener("click", () => {
+    removeErrorClasses(addCardModal);
     toggleModalWindow(addCardModal);
 });
 imageModalCloseBtn.addEventListener("click", () => {

@@ -1,11 +1,11 @@
-const showErrorMessage = (input, form, {errorClass, inputErrorClass, ...rest}) => {
+const showErrorMessage = (input, form, { errorClass, inputErrorClass, ...rest }) => {
   const error = document.querySelector('#' + input.id + "-error");
   error.textContent = input.validationMessage;
   error.classList.add(errorClass);
   input.classList.add(inputErrorClass);
 };
 
-const hideErrorMessage = (input, form, {errorClass, inputErrorClass, ...rest}) => {
+const hideErrorMessage = (input, form, { errorClass, inputErrorClass, ...rest }) => {
   const error = document.querySelector('#' + input.id + "-error");
   error.textContent = '';
   error.classList.remove(errorClass);
@@ -14,7 +14,7 @@ const hideErrorMessage = (input, form, {errorClass, inputErrorClass, ...rest}) =
 
 const checkInputValidity = (input, form, rest) => {
 
-  if(input.validity.valid) {
+  if (input.validity.valid) {
     hideErrorMessage(input, form, rest);
   } else {
 
@@ -23,10 +23,10 @@ const checkInputValidity = (input, form, rest) => {
 
 };
 
-const toggleButtonState = (inputs, button, {inactiveButtonClass, ...rest}) => {
+const toggleButtonState = (inputs, button, { inactiveButtonClass, ...rest }) => {
   const isValid = inputs.every((input) => input.validity.valid);
 
-  if(isValid) {
+  if (isValid) {
     button.classList.remove(inactiveButtonClass);
 
   } else {
@@ -34,7 +34,7 @@ const toggleButtonState = (inputs, button, {inactiveButtonClass, ...rest}) => {
   }
 };
 
-const enableValidation = ({formSelector, inputSelector, submitButtonSelector, ...rest}) => {
+const enableValidation = ({ formSelector, inputSelector, submitButtonSelector, ...rest }) => {
   const forms = [...document.querySelectorAll(formSelector)];
 
   forms.forEach((form) => {
@@ -62,14 +62,3 @@ enableValidation({
   inputErrorClass: "form__input_type_error",
   errorClass: "form__error_visible"
 });
-
-/*
-enableValidation({
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible"
-});
-*/
