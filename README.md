@@ -16,14 +16,23 @@ This is a single page project title *Around The U.S.* The page is an interactive
 * CSS Flexbox property
 * CSS Grid property 
 * CSS transition property
-* JavaScript
+* JavaScript Modal/Form popup-display
+* JavaScript Modal/Form input focus
+* JavaScript Form Validation
+* JavaScript Close w/ esc key + overlay click
+* JavaScript Image Card Creator/event listener setup
+* JavaSrcript Image Card remover button
 
 **Github Pages Link**
 
 [exmelendez.github.io/web_project_4](https://exmelendez.github.io/web_project_4/)
 
-**Sample Image**
+**Sample Images**
 
-![Screen shot of page](./images/sample_final-min.png)
+![Gif of edit profile open, edit + save](./images/modal_open_form_save.gif)
 
-![Screen shot of modal](./images/sample_modal-min.png)
+![Screen shot of image expanded modal](./images/image_expand_modal-min.png)
+
+![Screen shot of form validation messages](./images/form_validation-min.png)
+
+![Gif of cards being removed with delete button](./images/card_delete.gif)
