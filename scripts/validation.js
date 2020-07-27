@@ -1,12 +1,12 @@
 const showErrorMessage = (input, form, { errorClass, inputErrorClass, ...rest }) => {
-  const error = document.querySelector('#' + input.id + "-error");
+  const error = document.querySelector(`#${input.id}-error`);
   error.textContent = input.validationMessage;
   error.classList.add(errorClass);
   input.classList.add(inputErrorClass);
 };
 
 const hideErrorMessage = (input, form, { errorClass, inputErrorClass, ...rest }) => {
-  const error = document.querySelector('#' + input.id + "-error");
+  const error = document.querySelector(`#${input.id}-error`);
   error.textContent = '';
   error.classList.remove(errorClass);
   input.classList.remove(inputErrorClass);

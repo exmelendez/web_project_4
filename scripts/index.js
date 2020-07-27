@@ -33,10 +33,6 @@ const cardList = document.querySelector(".photos__grid");
 /* New Card HTML Template */
 const photoCardTemplate = document.querySelector(".card-template");
 
-/* Error Classes */
-const inputClassError = document.querySelector(".form__input_type_error");
-const spanClassError = document.querySelector(".form__error_visible");
-
 const initialCards = [
     {
         name: "Lago di Braies",
