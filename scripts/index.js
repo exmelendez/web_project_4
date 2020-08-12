@@ -1,3 +1,14 @@
+import FormValidator from './FormValidator.js';
+
+const defaultConfig = {
+    formSelector: ".form",
+    inputSelector: ".form__input",
+    submitButtonSelector: ".form__save-btn",
+    inactiveButtonClass: "form__save-btn_disabled",
+    inputErrorClass: "form__input_type_error",
+    errorClass: "form__error_visible"
+};
+
 /* Page Modals */
 const editProfileModal = document.querySelector(".modal_type_edit-profile");
 const addCardModal = document.querySelector(".modal_type_add-card");
@@ -12,8 +23,8 @@ const addModalCloseBtn = document.querySelector(".modal_close_add-card");
 const imageModalCloseBtn = document.querySelector(".modal_close_image-view");
 
 /* Modal Forms */
-const editProfileForm = document.querySelector(".form_type_edit-profile");
-const addCardForm = document.querySelector(".form_type_add-card");
+const editProfileForm = editProfileModal.querySelector(".form_type_edit-profile");
+const addCardForm = addCardModal.querySelector(".form_type_add-card");
 
 /* Edit Profile Form Inputs */
 const profileNameInput = document.querySelector(".form__input-profile-name");
@@ -32,6 +43,12 @@ const cardList = document.querySelector(".photos__grid");
 
 /* New Card HTML Template */
 const photoCardTemplate = document.querySelector(".card-template");
+
+const editFormValidator = new FormValidator(defaultConfig, editProfileForm);
+const cardFormValidator = new FormValidator(defaultConfig, addCardForm);
+
+editFormValidator.enableValidation();
+cardFormValidator.enableValidation();
 
 const initialCards = [
     {
