@@ -1,4 +1,5 @@
 import FormValidator from './FormValidator.js';
+import Card from './Card.js';
 
 const defaultConfig = {
     formSelector: ".form",
@@ -41,9 +42,7 @@ const pageDisplayTitle = document.querySelector(".profile__title");
 /* Image Card Container */
 const cardList = document.querySelector(".photos__grid");
 
-/* New Card HTML Template */
-const photoCardTemplate = document.querySelector(".card-template");
-
+/* Form Validator Objects */
 const editFormValidator = new FormValidator(defaultConfig, editProfileForm);
 const cardFormValidator = new FormValidator(defaultConfig, addCardForm);
 
@@ -86,43 +85,6 @@ const toggleModalWindow = (modal) => {
 };
 
 /**
- * Given two (2) string arguments of title and URL will create image card HTML element
- * @param {String} title String title for card
- * @param {String} url   String URL for card/image
- * @return {Object}      HTML/Node Object of image card
- */
-const cardCreator = (title, url) => {
-    const cardTemplate = photoCardTemplate.content.querySelector(".photos__item");
-    const cardElement = cardTemplate.cloneNode(true);
-    const cardImage = cardElement.querySelector(".photos__image");
-    const cardTitle = cardElement.querySelector(".photos__title");
-    const cardLikeButton = cardElement.querySelector(".photos__love-btn");
-    const cardDeleteButton = cardElement.querySelector(".photos__delete-btn");
-    const imageViewModalContainer = imageViewModal.querySelector(".modal__container_size-image");
-    const imageViewModalTitle = imageViewModal.querySelector(".modal__image-title");
-
-    cardTitle.textContent = title;
-    cardImage.style.backgroundImage = `url(${url})`;
-
-    cardDeleteButton.addEventListener("click", () => {
-        cardElement.remove();
-    });
-
-    cardLikeButton.addEventListener("click", () => {
-        cardLikeButton.classList.toggle("photos__love-btn_liked");
-    });
-
-    cardImage.addEventListener("click", () => {
-        imageViewModalContainer.style.backgroundImage = `url(${url})`;
-        imageViewModalTitle.textContent = title;
-        toggleModalWindow(imageViewModal);
-        imageViewModalContainer.focus();
-    });
-
-    return cardElement;
-};
-
-/**
  * Will take edit profile input values and set as profile data, will also call the function to close/remove the modal.
  * @param {Object} e Event Object
  */
@@ -146,12 +108,12 @@ const addFormHandler = (e) => {
 };
 
 /**
- * Iterates through card list array then creates and prepends to UL element of the variable "cardList"
+ * Iterates through card list array then creates "Card" object using Card.js and prepends to UL element of "cardList" variable
  */
 const photoCardRender = () => {
-    initialCards.forEach((data) => {
-        const cardElement = cardCreator(data.name, data.link);
-        cardList.prepend(cardElement);
+    initialCards.forEach((card) => {
+        const cardElement = new Card(card, ".card-template");
+        cardList.prepend(cardElement.generateCard());
     });
 };
 
