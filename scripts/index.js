@@ -96,14 +96,28 @@ const editFormHandler = (e) => {
 };
 
 /**
+ * Given a card object with the name and link will return a generated card object from the Card class
+ * @param {Object} cardData Card data Object, i.e. name & link
+ * @return {Object} Card object from Card class
+ */
+const createCard = (cardData) => {
+    const cardElement = new Card(cardData, ".card-template");
+    return cardElement.generateCard();
+};
+
+/**
  * Will take add card modal inout data and create a new card, also contains URL validation + calls function to close/remove the modal.
  * @param {Object} e Event Object
  */
 const addFormHandler = (e) => {
     e.preventDefault();
 
-    const cardElement = cardCreator(cardModalTitleInput.value, cardModalUrlInput.value);
-    cardList.prepend(cardElement);
+    const newCard = {
+        name: cardModalTitleInput.value,
+        link: cardModalUrlInput.value
+    };
+
+    cardList.prepend(createCard(newCard));
     toggleModalWindow(addCardModal);
 };
 
@@ -112,8 +126,7 @@ const addFormHandler = (e) => {
  */
 const photoCardRender = () => {
     initialCards.forEach((card) => {
-        const cardElement = new Card(card, ".card-template");
-        cardList.prepend(cardElement.generateCard());
+        cardList.prepend(createCard(card));
     });
 };
 
