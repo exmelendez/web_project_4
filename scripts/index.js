@@ -79,9 +79,8 @@ const initialCards = [
  * 
  * Handles esc key functionality when modal is open
  */
-export const escHandler = (e) => {
+const escHandler = (e) => {
     if (e.key === 'Escape') {
-        document.removeEventListener("keydown", escHandler);
         closeModalWindow();
     }
 };
@@ -90,7 +89,7 @@ export const escHandler = (e) => {
  * Given a modal/HTML/Node object it will remove the class name from it, making the modal hidden
  * @param {Object} modal HTML element
  */
-export const closeModalWindow = () => {
+const closeModalWindow = () => {
     const modal = document.querySelector(".modal_is-open");
 
     modal.classList.remove("modal_is-open");
@@ -103,6 +102,7 @@ export const closeModalWindow = () => {
  */
 export const openModalWindow = (modal) => {
     modal.classList.add("modal_is-open");
+    document.addEventListener("keydown", escHandler);
 };
 
 /**
@@ -178,20 +178,14 @@ profileEditBtn.addEventListener("click", () => {
     profileTitleInput.value = profileTitle;
 
     openModalWindow(editProfileModal);
-    document.addEventListener("keydown", escHandler);
 });
 
 addCardBtn.addEventListener("click", () => {
     openModalWindow(addCardModal);
-    document.addEventListener("keydown", escHandler);
 });
 
 editModalCloseBtn.addEventListener("click", closeModalWindow);
-
 addModalCloseBtn.addEventListener("click", closeModalWindow);
-
 imageModalCloseBtn.addEventListener("click", closeModalWindow);
-
 editProfileForm.addEventListener('submit', editFormHandler);
-
 addCardForm.addEventListener('submit', addFormHandler);
