@@ -19,10 +19,5 @@
   align-items: center;
   justify-content: center;
 
-  animation: modalFade 3s;
-}
-
-@keyframes modalFade {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+  visibility: hidden;
 }

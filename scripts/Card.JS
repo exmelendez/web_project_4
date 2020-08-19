@@ -1,3 +1,5 @@
+import { escHandler, openModalWindow } from './index.js';
+
 /**
  * Given a modal/HTML/Node object it will toggle the class name making it so the modal is visible and invisible
  * @param {Object} modal 
@@ -37,9 +39,8 @@ class Card {
         imageModalContainer.style.backgroundImage = `url(${this._link})`;
         imageModalTitle.textContent = this._name;
 
-        toggleModalWindow(this._imageModal);
-
-        imageModalContainer.focus();
+        openModalWindow(this._imageModal);
+        document.addEventListener("keydown", escHandler);
     }
 
     _setEventListeners() {

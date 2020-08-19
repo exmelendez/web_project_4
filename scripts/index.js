@@ -13,7 +13,6 @@ const defaultConfig = {
 /* Page Modals */
 const editProfileModal = document.querySelector(".modal_type_edit-profile");
 const addCardModal = document.querySelector(".modal_type_add-card");
-const imageViewModal = document.querySelector(".modal_type_image-view");
 const modalList = document.querySelectorAll(".modal");
 
 /* Buttons */
@@ -77,22 +76,33 @@ const initialCards = [
 ];
 
 /**
- * Given a modal/HTML/Node object it will toggle the class name making it so the modal is visible and invisible
- * @param {Object} modal 
+ * 
+ * Handles esc key functionality when modal is open
  */
-const toggleModalWindow = (modal) => {
-    modal.classList.toggle("modal_is-closed");
+export const escHandler = (e) => {
+    if (e.key === 'Escape') {
+        document.removeEventListener("keydown", escHandler);
+        closeModalWindow();
+    }
 };
 
 /**
- * Will take edit profile input values and set as profile data, will also call the function to close/remove the modal.
- * @param {Object} e Event Object
+ * Given a modal/HTML/Node object it will remove the class name from it, making the modal hidden
+ * @param {Object} modal HTML element
  */
-const editFormHandler = (e) => {
-    e.preventDefault();
-    pageDisplayName.textContent = profileNameInput.value;
-    pageDisplayTitle.textContent = profileTitleInput.value;
-    toggleModalWindow(editProfileModal);
+export const closeModalWindow = () => {
+    const modal = document.querySelector(".modal_is-open");
+
+    modal.classList.remove("modal_is-open");
+    document.removeEventListener("keydown", escHandler);
+};
+
+/**
+ * Given a modal/HTML/Node object it will add the class name to it, making the modal visible
+ * @param {Object} modal HTML element
+ */
+export const openModalWindow = (modal) => {
+    modal.classList.add("modal_is-open");
 };
 
 /**
@@ -103,6 +113,17 @@ const editFormHandler = (e) => {
 const createCard = (cardData) => {
     const cardElement = new Card(cardData, ".card-template");
     return cardElement.generateCard();
+};
+
+/**
+ * Will take edit profile input values and set as profile data, will also call the function to close/remove the modal.
+ * @param {Object} e Event Object
+ */
+const editFormHandler = (e) => {
+    e.preventDefault();
+    pageDisplayName.textContent = profileNameInput.value;
+    pageDisplayTitle.textContent = profileTitleInput.value;
+    closeModalWindow();
 };
 
 /**
@@ -118,7 +139,7 @@ const addFormHandler = (e) => {
     };
 
     cardList.prepend(createCard(newCard));
-    toggleModalWindow(addCardModal);
+    closeModalWindow();
 };
 
 /**
@@ -131,47 +152,22 @@ const photoCardRender = () => {
 };
 
 /**
- * With HTML node passed, will remove input/span error messages when modal is closed but not saved
- * @param {Object} modal HTML modal
- */
-const removeErrorClasses = (modal) => {
-    const formInputs = [...modal.querySelectorAll(".form__input")];
-    const formSpans = [...modal.querySelectorAll(".form__error")];
-
-    formInputs.forEach((input) => {
-        input.classList.remove("form__input_type_error");
-    });
-
-    formSpans.forEach((span) => {
-        span.classList.remove("form__error_visible");
-    });
-};
-
-/**
- * Enables + sets up exit of modal by overlay click or esc key
+ * Enables clicking outside of modals for closing
  * @param {Object} modalList Nodelist of HTML modals w/ ".modal" class
  */
-const enableModalExitClick = (modalList) => {
+const outsideModalHandler = (modalList) => {
     const modals = [...modalList];
     modals.forEach((modal) => {
         modal.onclick = (e) => {
             if (e.target == modal) {
-                removeErrorClasses(modal);
-                toggleModalWindow(modal);
+                closeModalWindow();
             }
         };
-
-        document.addEventListener("keydown", (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains("modal_is-closed")) {
-                removeErrorClasses(modal);
-                toggleModalWindow(modal);
-            }
-        });
     });
 };
 
 photoCardRender();
-enableModalExitClick(modalList);
+outsideModalHandler(modalList);
 
 /* EVENT LISTENERS */
 profileEditBtn.addEventListener("click", () => {
@@ -181,23 +177,21 @@ profileEditBtn.addEventListener("click", () => {
     profileNameInput.value = profileDisplayName;
     profileTitleInput.value = profileTitle;
 
-    toggleModalWindow(editProfileModal);
-    profileNameInput.focus();
+    openModalWindow(editProfileModal);
+    document.addEventListener("keydown", escHandler);
 });
+
 addCardBtn.addEventListener("click", () => {
-    toggleModalWindow(addCardModal);
-    cardModalTitleInput.focus();
+    openModalWindow(addCardModal);
+    document.addEventListener("keydown", escHandler);
 });
-editModalCloseBtn.addEventListener("click", () => {
-    removeErrorClasses(editProfileModal);
-    toggleModalWindow(editProfileModal);
-});
-addModalCloseBtn.addEventListener("click", () => {
-    removeErrorClasses(addCardModal);
-    toggleModalWindow(addCardModal);
-});
-imageModalCloseBtn.addEventListener("click", () => {
-    toggleModalWindow(imageViewModal);
-});
+
+editModalCloseBtn.addEventListener("click", closeModalWindow);
+
+addModalCloseBtn.addEventListener("click", closeModalWindow);
+
+imageModalCloseBtn.addEventListener("click", closeModalWindow);
+
 editProfileForm.addEventListener('submit', editFormHandler);
+
 addCardForm.addEventListener('submit', addFormHandler);
