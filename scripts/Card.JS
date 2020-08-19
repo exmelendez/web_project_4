@@ -1,13 +1,5 @@
 import { escHandler, openModalWindow } from './index.js';
 
-/**
- * Given a modal/HTML/Node object it will toggle the class name making it so the modal is visible and invisible
- * @param {Object} modal 
- */
-const toggleModalWindow = (modal) => {
-    modal.classList.toggle("modal_is-closed");
-};
-
 class Card {
     constructor(data, templateSelector) {
         this._link = data.link;
