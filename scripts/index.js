@@ -1,14 +1,15 @@
 import FormValidator from './FormValidator.js';
 import Card from './Card.js';
+import Section from './Section.js';
 import "../pages/index.css";
 
 const defaultConfig = {
-    formSelector: ".form",
-    inputSelector: ".form__input",
-    submitButtonSelector: ".form__save-btn",
-    inactiveButtonClass: "form__save-btn_disabled",
-    inputErrorClass: "form__input_type_error",
-    errorClass: "form__error_visible"
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__save-btn",
+  inactiveButtonClass: "form__save-btn_disabled",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__error_visible"
 };
 
 /* Page Modals */
@@ -50,30 +51,30 @@ editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
 const initialCards = [
-    {
-        name: "Lago di Braies",
-        link: "https://code.s3.yandex.net/web-code/lago.jpg"
-    },
-    {
-        name: "Vanois National Park",
-        link: "https://code.s3.yandex.net/web-code/vanois.jpg"
-    },
-    {
-        name: "Latemar",
-        link: "https://code.s3.yandex.net/web-code/latemar.jpg"
-    },
-    {
-        name: "Bald Mountains",
-        link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
-    },
-    {
-        name: "Lake Louise",
-        link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
-    },
-    {
-        name: "Yosemite Valley",
-        link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
-    }
+  {
+    name: "Lago di Braies",
+    link: "https://code.s3.yandex.net/web-code/lago.jpg"
+  },
+  {
+    name: "Vanois National Park",
+    link: "https://code.s3.yandex.net/web-code/vanois.jpg"
+  },
+  {
+    name: "Latemar",
+    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
+  },
+  {
+    name: "Bald Mountains",
+    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
+  },
+  {
+    name: "Lake Louise",
+    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
+  },
+  {
+    name: "Yosemite Valley",
+    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
+  }
 ];
 
 /**
@@ -81,9 +82,9 @@ const initialCards = [
  * Handles esc key functionality when modal is open
  */
 const escHandler = (e) => {
-    if (e.key === 'Escape') {
-        closeModalWindow();
-    }
+  if (e.key === 'Escape') {
+    closeModalWindow();
+  }
 };
 
 /**
@@ -91,10 +92,10 @@ const escHandler = (e) => {
  * @param {Object} modal HTML element
  */
 const closeModalWindow = () => {
-    const modal = document.querySelector(".modal_is-open");
+  const modal = document.querySelector(".modal_is-open");
 
-    modal.classList.remove("modal_is-open");
-    document.removeEventListener("keydown", escHandler);
+  modal.classList.remove("modal_is-open");
+  document.removeEventListener("keydown", escHandler);
 };
 
 /**
@@ -102,8 +103,8 @@ const closeModalWindow = () => {
  * @param {Object} modal HTML element
  */
 export const openModalWindow = (modal) => {
-    modal.classList.add("modal_is-open");
-    document.addEventListener("keydown", escHandler);
+  modal.classList.add("modal_is-open");
+  document.addEventListener("keydown", escHandler);
 };
 
 /**
@@ -112,8 +113,8 @@ export const openModalWindow = (modal) => {
  * @return {Object} Card object from Card class
  */
 const createCard = (cardData) => {
-    const cardElement = new Card(cardData, ".card-template");
-    return cardElement.generateCard();
+  const cardElement = new Card(cardData, ".card-template");
+  return cardElement.generateCard();
 };
 
 /**
@@ -121,10 +122,10 @@ const createCard = (cardData) => {
  * @param {Object} e Event Object
  */
 const editFormHandler = (e) => {
-    e.preventDefault();
-    pageDisplayName.textContent = profileNameInput.value;
-    pageDisplayTitle.textContent = profileTitleInput.value;
-    closeModalWindow();
+  e.preventDefault();
+  pageDisplayName.textContent = profileNameInput.value;
+  pageDisplayTitle.textContent = profileTitleInput.value;
+  closeModalWindow();
 };
 
 /**
@@ -132,57 +133,57 @@ const editFormHandler = (e) => {
  * @param {Object} e Event Object
  */
 const addFormHandler = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const newCard = {
-        name: cardModalTitleInput.value,
-        link: cardModalUrlInput.value
-    };
+  const newCard = {
+    name: cardModalTitleInput.value,
+    link: cardModalUrlInput.value
+  };
 
-    cardList.prepend(createCard(newCard));
-    closeModalWindow();
+  cardList.prepend(createCard(newCard));
+  closeModalWindow();
 };
 
-/**
- * Iterates through card list array then creates "Card" object using Card.js and prepends to UL element of "cardList" variable
- */
-const photoCardRender = () => {
-    initialCards.forEach((card) => {
-        cardList.prepend(createCard(card));
-    });
-};
+const cardRenderer = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, ".card-template");
+    cardRenderer.addItem(card.generateCard());
+  }
+}, ".photos__grid");
+
 
 /**
  * Enables clicking outside of modals for closing
  * @param {Object} modalList Nodelist of HTML modals w/ ".modal" class
  */
 const outsideModalHandler = (modalList) => {
-    const modals = [...modalList];
-    modals.forEach((modal) => {
-        modal.onclick = (e) => {
-            if (e.target == modal) {
-                closeModalWindow();
-            }
-        };
-    });
+  const modals = [...modalList];
+  modals.forEach((modal) => {
+    modal.onclick = (e) => {
+      if (e.target == modal) {
+        closeModalWindow();
+      }
+    };
+  });
 };
 
-photoCardRender();
+cardRenderer.renderer();
 outsideModalHandler(modalList);
 
 /* EVENT LISTENERS */
 profileEditBtn.addEventListener("click", () => {
-    const profileDisplayName = pageDisplayName.textContent;
-    const profileTitle = pageDisplayTitle.textContent;
+  const profileDisplayName = pageDisplayName.textContent;
+  const profileTitle = pageDisplayTitle.textContent;
 
-    profileNameInput.value = profileDisplayName;
-    profileTitleInput.value = profileTitle;
+  profileNameInput.value = profileDisplayName;
+  profileTitleInput.value = profileTitle;
 
-    openModalWindow(editProfileModal);
+  openModalWindow(editProfileModal);
 });
 
 addCardBtn.addEventListener("click", () => {
-    openModalWindow(addCardModal);
+  openModalWindow(addCardModal);
 });
 
 editModalCloseBtn.addEventListener("click", closeModalWindow);
