@@ -21,8 +21,8 @@ const modalList = document.querySelectorAll(".modal");
 /* Buttons */
 const profileEditBtn = document.querySelector(".profile__edit-btn");
 const addCardBtn = document.querySelector(".profile__add-btn");
-const editModalCloseBtn = document.querySelector(".modal_close_profile");
-const addModalCloseBtn = document.querySelector(".modal_close_add-card");
+// const editModalCloseBtn = document.querySelector(".modal_close_profile");
+// const addModalCloseBtn = document.querySelector(".modal_close_add-card");
 const imageModalCloseBtn = document.querySelector(".modal_close_image-view");
 
 /* Modal Forms */
@@ -153,24 +153,7 @@ const cardRenderer = new Section({
   }
 }, ".photos__grid");
 
-
-/**
- * Enables clicking outside of modals for closing
- * @param {Object} modalList Nodelist of HTML modals w/ ".modal" class
- */
-const outsideModalHandler = (modalList) => {
-  const modals = [...modalList];
-  modals.forEach((modal) => {
-    modal.onclick = (e) => {
-      if (e.target == modal) {
-        closeModalWindow();
-      }
-    };
-  });
-};
-
 cardRenderer.renderer();
-// outsideModalHandler(modalList);
 
 /* EVENT LISTENERS */
 profileEditBtn.addEventListener("click", () => {
@@ -181,22 +164,19 @@ profileEditBtn.addEventListener("click", () => {
 
 /*
 profileEditBtn.addEventListener("click", () => {
-  const profileDisplayName = pageDisplayName.textContent;
-  const profileTitle = pageDisplayTitle.textContent;
-
-  profileNameInput.value = profileDisplayName;
-  profileTitleInput.value = profileTitle;
-
-  openModalWindow(editProfileModal);
+  const editPopup = new Popup(".modal_type_edit-profile");
+  editPopup.open();
+  editPopup.setEventListeners();
 });
 */
 
 addCardBtn.addEventListener("click", () => {
-  openModalWindow(addCardModal);
+  const addPopup = new Popup(".modal_type_add-card");
+  addPopup.open();
+  addPopup.setEventListeners();
 });
 
-// editModalCloseBtn.addEventListener("click", closeModalWindow);
-addModalCloseBtn.addEventListener("click", closeModalWindow);
+// addModalCloseBtn.addEventListener("click", closeModalWindow);
 imageModalCloseBtn.addEventListener("click", closeModalWindow);
 editProfileForm.addEventListener('submit', editFormHandler);
 addCardForm.addEventListener('submit', addFormHandler);
