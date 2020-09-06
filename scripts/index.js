@@ -1,6 +1,7 @@
 import FormValidator from './FormValidator.js';
 import Card from './Card.js';
 import Section from './Section.js';
+import Popup from './Popup.js';
 import "../pages/index.css";
 
 const defaultConfig = {
@@ -169,9 +170,16 @@ const outsideModalHandler = (modalList) => {
 };
 
 cardRenderer.renderer();
-outsideModalHandler(modalList);
+// outsideModalHandler(modalList);
 
 /* EVENT LISTENERS */
+profileEditBtn.addEventListener("click", () => {
+  const editPopup = new Popup(".modal_type_edit-profile");
+  editPopup.open();
+  editPopup.setEventListeners();
+});
+
+/*
 profileEditBtn.addEventListener("click", () => {
   const profileDisplayName = pageDisplayName.textContent;
   const profileTitle = pageDisplayTitle.textContent;
@@ -181,12 +189,13 @@ profileEditBtn.addEventListener("click", () => {
 
   openModalWindow(editProfileModal);
 });
+*/
 
 addCardBtn.addEventListener("click", () => {
   openModalWindow(addCardModal);
 });
 
-editModalCloseBtn.addEventListener("click", closeModalWindow);
+// editModalCloseBtn.addEventListener("click", closeModalWindow);
 addModalCloseBtn.addEventListener("click", closeModalWindow);
 imageModalCloseBtn.addEventListener("click", closeModalWindow);
 editProfileForm.addEventListener('submit', editFormHandler);
