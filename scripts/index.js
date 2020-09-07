@@ -1,7 +1,6 @@
 import FormValidator from './FormValidator.js';
 import Card from './Card.js';
 import Section from './Section.js';
-import Popup from './Popup.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import "../pages/index.css";
@@ -81,17 +80,6 @@ const initialCards = [
 ];
 
 /**
- * Will take edit profile input values and set as profile data, will also call the function to close/remove the modal.
- * @param {Object} e Event Object
- */
-const editFormHandler = (e) => {
-  e.preventDefault();
-  pageDisplayName.textContent = profileNameInput.value;
-  pageDisplayTitle.textContent = profileTitleInput.value;
-  closeModalWindow();
-};
-
-/**
  * Will take add card modal inout data and create a new card, also contains URL validation + calls function to close/remove the modal.
  * @param {Object} e Event Object
  */
@@ -128,17 +116,20 @@ cardRenderer.renderer();
 
 /* EVENT LISTENERS */
 profileEditBtn.addEventListener("click", () => {
+  console.log("profile edit btn clicked");
   const editPopup = new PopupWithForm(".modal_type_edit-profile", {
     handleFormSubmit: (inputs) => {
-
+      console.log("handle form submit");
       inputs.forEach((input) => {
         if(input.classList.contains("form__input-profile-name")) {
+          console.log("name:", input.value);
           pageDisplayName.textContent = input.value;
         } else if (input.classList.contains("form__input-profile-title")) {
+          console.log("profile title:", input.value);
           pageDisplayTitle.textContent = input.value;
         }
       })
-      
+
     }
   });
 
@@ -147,10 +138,40 @@ profileEditBtn.addEventListener("click", () => {
 });
 
 addCardBtn.addEventListener("click", () => {
-  const addPopup = new Popup(".modal_type_add-card");
+  const addPopup = new PopupWithForm(".modal_type_add-card", {
+    handleFormSubmit: (inputs) => {
+      const cardProperties = {};
+
+      if(input.classList.contains("form__input_card-title")) {
+        cardProperties.name = input.value;
+      } else if (input.classList.contains("form__input_card-url")) {
+        cardProperties.link = input.value;
+      }
+
+      //code here
+
+      const cardRenderer = new Section({
+        items: cardPoperties,
+        renderer: (item) => {
+          const card = new Card(item, ".card-template", {
+            handleImageClick: () => {
+              cardPopup.open(item.link, item.name);
+            }
+          });
+          const cardElem = card.generateCard();
+          const cardPopup = new PopupWithImage(".modal_type_image-view");
+          cardPopup.setEventListeners();
+      
+          cardRenderer.addItem(cardElem);
+        }
+      }, ".photos__grid");
+      
+      cardRenderer.renderer();
+    }
+  });
+
   addPopup.open();
   addPopup.setEventListeners();
 });
 
-// editProfileForm.addEventListener('submit', editFormHandler);
 // addCardForm.addEventListener('submit', addFormHandler);
