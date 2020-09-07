@@ -2,6 +2,8 @@ import FormValidator from './FormValidator.js';
 import Card from './Card.js';
 import Section from './Section.js';
 import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
 import "../pages/index.css";
 
 const defaultConfig = {
@@ -79,46 +81,6 @@ const initialCards = [
 ];
 
 /**
- * 
- * Handles esc key functionality when modal is open
- */
-const escHandler = (e) => {
-  if (e.key === 'Escape') {
-    closeModalWindow();
-  }
-};
-
-/**
- * Given a modal/HTML/Node object it will remove the class name from it, making the modal hidden
- * @param {Object} modal HTML element
- */
-const closeModalWindow = () => {
-  const modal = document.querySelector(".modal_is-open");
-
-  modal.classList.remove("modal_is-open");
-  document.removeEventListener("keydown", escHandler);
-};
-
-/**
- * Given a modal/HTML/Node object it will add the class name to it, making the modal visible
- * @param {Object} modal HTML element
- */
-export const openModalWindow = (modal) => {
-  modal.classList.add("modal_is-open");
-  document.addEventListener("keydown", escHandler);
-};
-
-/**
- * Given a card object with the name and link will return a generated card object from the Card class
- * @param {Object} cardData Card data Object, i.e. name & link
- * @return {Object} Card object from Card class
- */
-const createCard = (cardData) => {
-  const cardElement = new Card(cardData, ".card-template");
-  return cardElement.generateCard();
-};
-
-/**
  * Will take edit profile input values and set as profile data, will also call the function to close/remove the modal.
  * @param {Object} e Event Object
  */
@@ -140,16 +102,25 @@ const addFormHandler = (e) => {
     name: cardModalTitleInput.value,
     link: cardModalUrlInput.value
   };
+  cardElement = new Card(newCard, ".card-template");
 
-  cardList.prepend(createCard(newCard));
+  cardList.prepend(cardElement.generateCard());
   closeModalWindow();
 };
 
 const cardRenderer = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, ".card-template");
-    cardRenderer.addItem(card.generateCard());
+    const card = new Card(item, ".card-template", {
+      handleImageClick: () => {
+        cardPopup.open(item.link, item.name);
+      }
+    });
+    const cardElem = card.generateCard();
+    const cardPopup = new PopupWithImage(".modal_type_image-view");
+    cardPopup.setEventListeners();
+
+    cardRenderer.addItem(cardElem);
   }
 }, ".photos__grid");
 
@@ -157,18 +128,23 @@ cardRenderer.renderer();
 
 /* EVENT LISTENERS */
 profileEditBtn.addEventListener("click", () => {
-  const editPopup = new Popup(".modal_type_edit-profile");
-  editPopup.open();
-  editPopup.setEventListeners();
-});
+  const editPopup = new PopupWithForm(".modal_type_edit-profile", {
+    handleFormSubmit: (inputs) => {
 
-/*
-profileEditBtn.addEventListener("click", () => {
-  const editPopup = new Popup(".modal_type_edit-profile");
+      inputs.forEach((input) => {
+        if(input.classList.contains("form__input-profile-name")) {
+          pageDisplayName.textContent = input.value;
+        } else if (input.classList.contains("form__input-profile-title")) {
+          pageDisplayTitle.textContent = input.value;
+        }
+      })
+      
+    }
+  });
+
   editPopup.open();
   editPopup.setEventListeners();
 });
-*/
 
 addCardBtn.addEventListener("click", () => {
   const addPopup = new Popup(".modal_type_add-card");
@@ -176,7 +152,5 @@ addCardBtn.addEventListener("click", () => {
   addPopup.setEventListeners();
 });
 
-// addModalCloseBtn.addEventListener("click", closeModalWindow);
-imageModalCloseBtn.addEventListener("click", closeModalWindow);
-editProfileForm.addEventListener('submit', editFormHandler);
-addCardForm.addEventListener('submit', addFormHandler);
+// editProfileForm.addEventListener('submit', editFormHandler);
+// addCardForm.addEventListener('submit', addFormHandler);

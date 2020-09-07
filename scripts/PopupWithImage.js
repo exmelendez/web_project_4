@@ -6,8 +6,8 @@ class PopupWithImage extends Popup {
   }
 
   open(link, caption) {
-    this.popupElement.querySelector('.modal__container_size-image').style.backgroundImage = `url(${link})`;
-    this.popupElement.querySelector('.modal__image-title').textContent = caption;
+    this._popupElement.querySelector('.modal__container_size-image').style.backgroundImage = `url(${link})`;
+    this._popupElement.querySelector('.modal__image-title').textContent = caption;
 
     super.open();
   }
