@@ -116,26 +116,23 @@ cardRenderer.renderer();
 
 /* EVENT LISTENERS */
 profileEditBtn.addEventListener("click", () => {
-  console.log("profile edit btn clicked");
-  const editPopup = new PopupWithForm(".modal_type_edit-profile", {
-    handleFormSubmit: (inputs) => {
-      console.log("handle form submit");
-      inputs.forEach((input) => {
-        if(input.classList.contains("form__input-profile-name")) {
-          console.log("name:", input.value);
-          pageDisplayName.textContent = input.value;
-        } else if (input.classList.contains("form__input-profile-title")) {
-          console.log("profile title:", input.value);
-          pageDisplayTitle.textContent = input.value;
-        }
-      })
-
-    }
-  });
-
   editPopup.open();
-  editPopup.setEventListeners();
 });
+
+const editPopup = new PopupWithForm(".modal_type_edit-profile", {
+  handleFormSubmit: (inputs) => {
+    inputs.forEach((input) => {
+      if(input.classList.contains("form__input-profile-name")) {
+        pageDisplayName.textContent = input.value;
+      } else if (input.classList.contains("form__input-profile-title")) {
+        pageDisplayTitle.textContent = input.value;
+      }
+    })
+
+  }
+});
+
+editPopup.setEventListeners();
 
 addCardBtn.addEventListener("click", () => {
   const addPopup = new PopupWithForm(".modal_type_add-card", {
