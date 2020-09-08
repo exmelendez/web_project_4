@@ -114,10 +114,7 @@ const cardRenderer = new Section({
 
 cardRenderer.renderer();
 
-/* EVENT LISTENERS */
-profileEditBtn.addEventListener("click", () => {
-  editPopup.open();
-});
+/* PROFILE EDIT MODAL */
 
 const editPopup = new PopupWithForm(".modal_type_edit-profile", {
   handleFormSubmit: (inputs) => {
@@ -134,41 +131,50 @@ const editPopup = new PopupWithForm(".modal_type_edit-profile", {
 
 editPopup.setEventListeners();
 
-addCardBtn.addEventListener("click", () => {
-  const addPopup = new PopupWithForm(".modal_type_add-card", {
-    handleFormSubmit: (inputs) => {
-      const cardProperties = {};
+profileEditBtn.addEventListener("click", () => {
+  editPopup.open();
+});
 
+/* ADD CARD MODAL */
+
+const addPopup = new PopupWithForm(".modal_type_add-card", {
+  handleFormSubmit: (inputs) => {
+    const cardsData = [];
+    const cardProperties = {};
+
+    inputs.forEach((input) => {
       if(input.classList.contains("form__input_card-title")) {
         cardProperties.name = input.value;
       } else if (input.classList.contains("form__input_card-url")) {
         cardProperties.link = input.value;
       }
+    });
 
-      //code here
+    cardsData.push(cardProperties);
 
-      const cardRenderer = new Section({
-        items: cardPoperties,
-        renderer: (item) => {
-          const card = new Card(item, ".card-template", {
-            handleImageClick: () => {
-              cardPopup.open(item.link, item.name);
-            }
-          });
-          const cardElem = card.generateCard();
-          const cardPopup = new PopupWithImage(".modal_type_image-view");
-          cardPopup.setEventListeners();
-      
-          cardRenderer.addItem(cardElem);
-        }
-      }, ".photos__grid");
-      
-      cardRenderer.renderer();
-    }
-  });
+    const cardRenderer = new Section({
+      items: cardsData,
+      renderer: (item) => {
+        const card = new Card(item, ".card-template", {
+          handleImageClick: () => {
+            cardPopup.open(item.link, item.name);
+          }
+        });
+        const cardElem = card.generateCard();
+        const cardPopup = new PopupWithImage(".modal_type_image-view");
+        cardPopup.setEventListeners();
+    
+        cardRenderer.addItem(cardElem);
+      }
+    }, ".photos__grid");
+    
+    cardRenderer.renderer();
+  }
+});
+addPopup.setEventListeners();
 
+addCardBtn.addEventListener("click", () => {
   addPopup.open();
-  addPopup.setEventListeners();
 });
 
 // addCardForm.addEventListener('submit', addFormHandler);
