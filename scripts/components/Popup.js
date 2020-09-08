@@ -1,3 +1,5 @@
+import defaultConfig from '../utils/constants.js'
+
 class Popup {
   constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
@@ -17,7 +19,7 @@ class Popup {
 
   setEventListeners() {
     this._popupElement.addEventListener("click", (e) => {
-      if (e.target.classList.contains('modal__close-btn') ||  e.target.classList.contains('modal_is-open')) {
+      if (e.target.classList.contains('modal__close-btn') || e.target.classList.contains('modal_is-open')) {
         this.close();
       }
     });
