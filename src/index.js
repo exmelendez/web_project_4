@@ -5,7 +5,7 @@ import PopupWithImage from './components/PopupWithImage.js';
 import PopupWithForm from './components/PopupWithForm.js';
 import UserInfo from './components/UserInfo.js';
 import { addCardBtn, addForm, defaultConfig, initialCards, profileEditBtn, profileForm } from './utils/constants.js';
-import "../pages/index.css";
+import "./pages/index.css";
 
 /* Form Validator Objects */
 const editFormValidator = new FormValidator(defaultConfig, profileForm);
