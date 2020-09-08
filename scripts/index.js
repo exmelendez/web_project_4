@@ -4,6 +4,7 @@ import Section from './Section.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import "../pages/index.css";
+import UserInfo from './UserInfo.js';
 
 const defaultConfig = {
   formSelector: ".form",
@@ -22,8 +23,6 @@ const modalList = document.querySelectorAll(".modal");
 /* Buttons */
 const profileEditBtn = document.querySelector(".profile__edit-btn");
 const addCardBtn = document.querySelector(".profile__add-btn");
-// const editModalCloseBtn = document.querySelector(".modal_close_profile");
-// const addModalCloseBtn = document.querySelector(".modal_close_add-card");
 const imageModalCloseBtn = document.querySelector(".modal_close_image-view");
 
 /* Modal Forms */
@@ -79,23 +78,6 @@ const initialCards = [
   }
 ];
 
-/**
- * Will take add card modal inout data and create a new card, also contains URL validation + calls function to close/remove the modal.
- * @param {Object} e Event Object
- */
-const addFormHandler = (e) => {
-  e.preventDefault();
-
-  const newCard = {
-    name: cardModalTitleInput.value,
-    link: cardModalUrlInput.value
-  };
-  cardElement = new Card(newCard, ".card-template");
-
-  cardList.prepend(cardElement.generateCard());
-  closeModalWindow();
-};
-
 const cardRenderer = new Section({
   items: initialCards,
   renderer: (item) => {
@@ -118,14 +100,18 @@ cardRenderer.renderer();
 
 const editPopup = new PopupWithForm(".modal_type_edit-profile", {
   handleFormSubmit: (inputs) => {
+    const userData = {};
+
     inputs.forEach((input) => {
       if(input.classList.contains("form__input-profile-name")) {
-        pageDisplayName.textContent = input.value;
+        userData.userName = input.value;
       } else if (input.classList.contains("form__input-profile-title")) {
-        pageDisplayTitle.textContent = input.value;
+        userData.userJob = input.value;
       }
     })
 
+    const userInfo = new UserInfo(userData);
+    userInfo.setUserInfo();
   }
 });
 
@@ -176,5 +162,3 @@ addPopup.setEventListeners();
 addCardBtn.addEventListener("click", () => {
   addPopup.open();
 });
-
-// addCardForm.addEventListener('submit', addFormHandler);
