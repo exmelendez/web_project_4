@@ -19,7 +19,7 @@ const cardRenderer = new Section({
   renderer: (item) => {
     const card = new Card(item, ".card-template", {
       handleCardClick: () => {
-        cardPopup.open(item.link, item.name);
+        cardPopup.open(item.url, item.title);
       }
     });
     const cardElem = card.generateCard();
@@ -50,26 +50,16 @@ profileEditBtn.addEventListener("click", () => {
 /* ADD CARD MODAL */
 
 const addPopup = new PopupWithForm(".modal_type_add-card", {
-  handleFormSubmit: (inputs) => {
+  handleFormSubmit: (inputValues) => {
     const cardsData = [];
-    const cardProperties = {};
-
-    inputs.forEach((input) => {
-      if (input.classList.contains("form__input_card-title")) {
-        cardProperties.name = input.value;
-      } else if (input.classList.contains("form__input_card-url")) {
-        cardProperties.link = input.value;
-      }
-    });
-
-    cardsData.push(cardProperties);
+    cardsData.push(inputValues);
 
     const cardRenderer = new Section({
       items: cardsData,
       renderer: (item) => {
         const card = new Card(item, ".card-template", {
           handleCardClick: () => {
-            cardPopup.open(item.link, item.name);
+            cardPopup.open(item.url, item.title);
           }
         });
         const cardElem = card.generateCard();

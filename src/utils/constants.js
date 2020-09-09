@@ -21,27 +21,27 @@ export const defaultConfig = {
 
 export const initialCards = [
   {
-    name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg"
+    title: "Lago di Braies",
+    url: "https://code.s3.yandex.net/web-code/lago.jpg"
   },
   {
-    name: "Vanois National Park",
-    link: "https://code.s3.yandex.net/web-code/vanois.jpg"
+    title: "Vanois National Park",
+    url: "https://code.s3.yandex.net/web-code/vanois.jpg"
   },
   {
-    name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
+    title: "Latemar",
+    url: "https://code.s3.yandex.net/web-code/latemar.jpg"
   },
   {
-    name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
+    title: "Bald Mountains",
+    url: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
   },
   {
-    name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
+    title: "Lake Louise",
+    url: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
   },
   {
-    name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
+    title: "Yosemite Valley",
+    url: "https://code.s3.yandex.net/web-code/yosemite.jpg"
   }
 ];

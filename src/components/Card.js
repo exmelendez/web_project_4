@@ -1,7 +1,7 @@
 class Card {
   constructor(data, templateSelector, { handleCardClick }) {
-    this._link = data.link;
-    this._name = data.name;
+    this._link = data.url;
+    this._name = data.title;
     this._templateSelector = templateSelector;
     this._imageModal = document.querySelector(".modal_type_image-view");
     this._cardTemplate = document.querySelector(this._templateSelector).content.querySelector(".photos__item");
