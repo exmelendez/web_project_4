@@ -35,18 +35,8 @@ cardRenderer.renderer();
 /* PROFILE EDIT MODAL */
 
 const editPopup = new PopupWithForm(".modal_type_edit-profile", {
-  handleFormSubmit: (inputs) => {
-    const userData = {};
-
-    inputs.forEach((input) => {
-      if (input.classList.contains("form__input-profile-name")) {
-        userData.userName = input.value;
-      } else if (input.classList.contains("form__input-profile-title")) {
-        userData.userJob = input.value;
-      }
-    })
-
-    const userInfo = new UserInfo(userData);
+  handleFormSubmit: (inputValues) => {
+    const userInfo = new UserInfo(inputValues);
     userInfo.setUserInfo();
   }
 });
