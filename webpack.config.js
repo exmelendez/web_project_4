@@ -8,7 +8,7 @@ module.exports = {
   },
   output: {
     filename: 'main.js',
-    "path": path.resolve(__dirname, 'dist')
+    "path": path.resolve(__dirname, 'docs')
   },
   devtool: 'cheap-module-source-map',
   module: {
