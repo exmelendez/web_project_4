@@ -13,6 +13,7 @@ const cardFormValidator = new FormValidator(defaultConfig, addForm);
 
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+const cardPopup = new PopupWithImage(".modal_type_image-view");
 
 const cardRenderer = new Section({
   items: initialCards,
@@ -23,7 +24,6 @@ const cardRenderer = new Section({
       }
     });
     const cardElem = card.generateCard();
-    const cardPopup = new PopupWithImage(".modal_type_image-view");
     cardPopup.setEventListeners();
 
     cardRenderer.addItem(cardElem);
@@ -63,7 +63,6 @@ const addPopup = new PopupWithForm(".modal_type_add-card", {
           }
         });
         const cardElem = card.generateCard();
-        const cardPopup = new PopupWithImage(".modal_type_image-view");
         cardPopup.setEventListeners();
 
         cardRenderer.addItem(cardElem);
