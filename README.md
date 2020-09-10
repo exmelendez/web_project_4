@@ -29,7 +29,7 @@ This is a single page project title *Around The U.S.* The page is an interactive
 
 **Github Pages Link**
 
-[exmelendez.github.io/web_project_4](https://exmelendez.github.io/web_project_4/)
+[exmelendez.github.io/web_project_4](https://exmelendez.github.io/web_project_4/index.html)
 
 **Sample Images**
 
