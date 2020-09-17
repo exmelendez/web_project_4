@@ -1,12 +1,12 @@
 class Section {
-  constructor({ items, renderer }, classSelector) {
-    this._items = items;
+  constructor({ cardData, renderer }, classSelector) {
+    this._cards = cardData;
     this._renderer = renderer;
     this._classSelector = document.querySelector(classSelector);
   }
 
-  addItem(item) {
-    this._classSelector.prepend(item);
+  addItem(card) {
+    this._classSelector.prepend(card);
   }
 
   clear() {
@@ -14,7 +14,7 @@ class Section {
   }
 
   renderer() {
-    this._items.forEach(item => this._renderer(item));
+    this._cards.length > 1 ? this._cards.forEach(card => this._renderer(card)) : this._renderer(this._cards);
   }
 }
 

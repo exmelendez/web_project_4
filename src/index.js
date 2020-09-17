@@ -4,8 +4,69 @@ import Section from './components/Section.js';
 import PopupWithImage from './components/PopupWithImage.js';
 import PopupWithForm from './components/PopupWithForm.js';
 import UserInfo from './components/UserInfo.js';
-import { addCardBtn, addForm, defaultConfig, initialCards, profileEditBtn, profileForm } from './utils/constants.js';
+import { addCardBtn, addForm, defaultConfig, profileEditBtn, profileForm, deleteHandler } from './utils/constants.js';
+import Api from './components/Api.js';
 import "./pages/index.css";
+import Popup from './components/Popup.js';
+
+const deleteCardPopup = new Popup(".modal_type_confirm-delete");
+deleteCardPopup.setEventListeners();
+const confirmDeleteBtn = document.querySelector(".modal__confirm-delete-btn");
+
+const cardRender = (cardData, { user }) => {
+  const section = new Section({
+    cardData,
+    renderer: (cardData) => {
+
+      const cardSetup = new Card(cardData, ".card-template", {
+        handleCardClick: () => {
+          cardImagePopup.open(cardData);
+        },
+        deleteCardBtn: () => {
+          const deleteHandler = () => {
+            api.removeCard(cardSetup.getId())
+              .then(() => {
+                cardSetup.remove();
+                deleteCardPopup.close();
+                confirmDeleteBtn.removeEventListener("click", deleteHandler);
+              });
+          };
+
+          confirmDeleteBtn.addEventListener("click", deleteHandler);
+          deleteCardPopup.open();
+        }
+      });
+
+      const card = cardSetup.generateCard();
+      cardSetup.activateTrashBtn(user._id);
+
+      const cardImagePopup = new PopupWithImage(".modal_type_image-view");
+      cardImagePopup.setEventListeners();
+
+      section.addItem(card);
+    }
+  }, ".photos__grid");
+
+  section.renderer();
+};
+
+const api = new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/group-4",
+  headers: {
+    authorization: "9d5a3bcf-ed42-48db-a52f-3430aec59f7e",
+    "Content-Type": "application/json"
+  }
+});
+
+api.getUserInfo()
+  .then(user => {
+    new UserInfo(user);
+
+    api.getCardList().then((cardData) => {
+      cardRender(cardData, { user });
+    });
+  });
+
 
 /* Form Validator Objects */
 const editFormValidator = new FormValidator(defaultConfig, profileForm);
@@ -14,67 +75,37 @@ const cardFormValidator = new FormValidator(defaultConfig, addForm);
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
-const cardRenderer = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = new Card(item, ".card-template", {
-      handleCardClick: () => {
-        cardPopup.open(item.url, item.title);
-      }
-    });
-    const cardElem = card.generateCard();
-    const cardPopup = new PopupWithImage(".modal_type_image-view");
-    cardPopup.setEventListeners();
-
-    cardRenderer.addItem(cardElem);
-  }
-}, ".photos__grid");
-
-cardRenderer.renderer();
 
 /* PROFILE EDIT MODAL */
-
 const editPopup = new PopupWithForm(".modal_type_edit-profile", {
   handleFormSubmit: (inputValues) => {
-    const userInfo = new UserInfo(inputValues);
-    userInfo.setUserInfo();
+    api.setUserInfo(inputValues)
+      .then((userInfoResponse) => {
+        new UserInfo(userInfoResponse);
+      });
   }
 });
 
 editPopup.setEventListeners();
-
 profileEditBtn.addEventListener("click", () => {
   editPopup.open();
 });
 
 /* ADD CARD MODAL */
+const addCardPopup = new PopupWithForm(".modal_type_add-card", {
+  handleFormSubmit: (submittedCardData) => {
 
-const addPopup = new PopupWithForm(".modal_type_add-card", {
-  handleFormSubmit: (inputValues) => {
-    const cardsData = [];
-    cardsData.push(inputValues);
-
-    const cardRenderer = new Section({
-      items: cardsData,
-      renderer: (item) => {
-        const card = new Card(item, ".card-template", {
-          handleCardClick: () => {
-            cardPopup.open(item.url, item.title);
-          }
-        });
-        const cardElem = card.generateCard();
-        const cardPopup = new PopupWithImage(".modal_type_image-view");
-        cardPopup.setEventListeners();
-
-        cardRenderer.addItem(cardElem);
-      }
-    }, ".photos__grid");
-
-    cardRenderer.renderer();
+    api.getUserInfo()
+      .then(user => {
+        api.addCard(submittedCardData)
+          .then((cardData) => {
+            cardRender(cardData, { user });
+          });
+      });
   }
 });
-addPopup.setEventListeners();
+addCardPopup.setEventListeners();
 
 addCardBtn.addEventListener("click", () => {
-  addPopup.open();
+  addCardPopup.open();
 });

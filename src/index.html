@@ -20,11 +20,11 @@
       <img class="profile__avatar" src="./images/avatar_image-min.jpg" alt="account image">
 
       <div class="profile__info">
-        <p class="profile__name">Jacques Cousteau</p>
+        <p class="profile__name"></p>
 
         <button class="profile__edit-btn" aria-label="Profile edit"></button>
 
-        <p class="profile__title">Explorer</p>
+        <p class="profile__title"></p>
       </div>
 
       <button class="profile__add-btn" aria-label="Add card"></button>
@@ -50,7 +50,7 @@
           minlength="2" maxlength="40" required>
         <span id="profile-name-error" class="form__error"></span>
 
-        <input id="profile-title" class="form__input form__input-profile-title" type="text" name="title"
+        <input id="profile-title" class="form__input form__input-profile-title" type="text" name="about"
           placeholder="Title" minlength="2" maxlength="200" required>
         <span id="profile-title-error" class="form__error"></span>
 
@@ -65,11 +65,12 @@
       <button class="modal__close-btn modal_close_add-card" aria-label="Close popup">&plus;</button>
       <h2 class="modal__title">New place</h2>
       <form class="form form_type_add-card">
-        <input id="card-title" class="form__input form__input_card-title" type="text" name="title" placeholder="Title"
+        <input id="card-title" class="form__input form__input_card-title" type="text" name="name" placeholder="Title"
           minlength="1" maxlength="30" required>
         <span id="card-title-error" class="form__error"></span>
 
-        <input id="card-url" class="form__input form__input_card-url" type="url" name="url" placeholder="Link" required>
+        <input id="card-url" class="form__input form__input_card-url" type="url" name="link" placeholder="Link"
+          required>
         <span id="card-url-error" class="form__error"></span>
 
         <button class="form__save-btn" aria-label="Save form">Save</button>
@@ -85,6 +86,16 @@
     </div>
   </div>
 
+  <!-- CONFIRM CARD DELETE MODAL -->
+  <div class="modal modal_type_confirm-delete">
+    <div class="modal__container modal__container_type-delete">
+      <button class="modal__close-btn modal_close_confirm-delete" aria-label="Close popup">&plus;</button>
+      <h2 class="modal__title">Are you sure?</h2>
+
+      <button class="modal__confirm-delete-btn" type="button" aria-label="Confirm Card Delete">Yes</button>
+    </div>
+  </div>
+
   <!-- CARD TEMPLATE -->
   <template class="card-template">
     <li class="photos__item">
@@ -93,7 +104,10 @@
 
       <div class="photos__item-info">
         <p class="photos__title"></p>
-        <button class="photos__love-btn" aria-label="Love"></button>
+        <div class="photos__likes-container">
+          <button class="photos__love-btn" aria-label="Love"></button>
+          <p class="photos__likes"></p>
+        </div>
       </div>
     </li>
   </template>

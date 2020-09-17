@@ -18,30 +18,3 @@ export const defaultConfig = {
   inputErrorClass: "form__input_type_error",
   errorClass: "form__error_visible"
 };
-
-export const initialCards = [
-  {
-    title: "Lago di Braies",
-    url: "https://code.s3.yandex.net/web-code/lago.jpg"
-  },
-  {
-    title: "Vanois National Park",
-    url: "https://code.s3.yandex.net/web-code/vanois.jpg"
-  },
-  {
-    title: "Latemar",
-    url: "https://code.s3.yandex.net/web-code/latemar.jpg"
-  },
-  {
-    title: "Bald Mountains",
-    url: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
-  },
-  {
-    title: "Lake Louise",
-    url: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
-  },
-  {
-    title: "Yosemite Valley",
-    url: "https://code.s3.yandex.net/web-code/yosemite.jpg"
-  }
-];
