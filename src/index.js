@@ -13,6 +13,11 @@ const deleteCardPopup = new Popup(".modal_type_confirm-delete");
 deleteCardPopup.setEventListeners();
 const confirmDeleteBtn = document.querySelector(".modal__confirm-delete-btn");
 
+/**
+ * Renders cards + sets listeners
+ * @param {object} cardData card object response from API
+ * @param {object} user user object response from API
+ */
 const cardRender = (cardData, { user }) => {
   const section = new Section({
     cardData,
@@ -34,11 +39,19 @@ const cardRender = (cardData, { user }) => {
 
           confirmDeleteBtn.addEventListener("click", deleteHandler);
           deleteCardPopup.open();
+        },
+        handleLike: (cardId) => {
+          api.changeLikeCardStatus(cardId, cardSetup.isLikedByOwner(user._id))
+            .then(card => {
+              cardSetup.setLikeList(card.likes);
+              cardSetup.toggleLikeBtn(cardSetup.isLikedByOwner(user._id));
+            });
         }
       });
 
       const card = cardSetup.generateCard();
       cardSetup.activateTrashBtn(user._id);
+      cardSetup.toggleLikeBtn(cardSetup.isLikedByOwner(user._id));
 
       const cardImagePopup = new PopupWithImage(".modal_type_image-view");
       cardImagePopup.setEventListeners();
@@ -58,6 +71,7 @@ const api = new Api({
   }
 });
 
+/* INITIAL PAGE/CARD RENDER */
 api.getUserInfo()
   .then(user => {
     new UserInfo(user);
