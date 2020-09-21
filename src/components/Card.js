@@ -54,6 +54,7 @@ class Card {
 
   remove() {
     this._card.remove();
+    this._card = null;
   }
 
   setLikeList(newList) {
