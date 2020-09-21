@@ -4,13 +4,26 @@ import Section from './components/Section.js';
 import PopupWithImage from './components/PopupWithImage.js';
 import PopupWithForm from './components/PopupWithForm.js';
 import UserInfo from './components/UserInfo.js';
-import { addCardBtn, addForm, defaultConfig, profileEditBtn, profileForm, deleteHandler } from './utils/constants.js';
+import { addCardBtn, addForm, defaultConfig, profileEditBtn, profileForm, editAvatarBtn, editAvatarModal, editAvatarForm } from './utils/constants.js';
 import Api from './components/Api.js';
 import "./pages/index.css";
 import Popup from './components/Popup.js';
 
 const deleteCardPopup = new Popup(".modal_type_confirm-delete");
 deleteCardPopup.setEventListeners();
+
+const editAvatarPopup = new PopupWithForm(".modal_type_update-avatar", {
+  handleFormSubmit: (inputValues) => {
+    api.setUserAvatar(inputValues)
+      .then((res) => {
+        sessionUser.updateAvatar(res);
+        editAvatarPopup.formIsSaving(false);
+      });
+  }
+});
+
+editAvatarPopup.setEventListeners();
+
 const confirmDeleteBtn = document.querySelector(".modal__confirm-delete-btn");
 
 /**
@@ -71,10 +84,12 @@ const api = new Api({
   }
 });
 
+let sessionUser;
+
 /* INITIAL PAGE/CARD RENDER */
 api.getUserInfo()
   .then(user => {
-    new UserInfo(user);
+    sessionUser = new UserInfo(user);
 
     api.getCardList().then((cardData) => {
       cardRender(cardData, { user });
@@ -85,9 +100,11 @@ api.getUserInfo()
 /* Form Validator Objects */
 const editFormValidator = new FormValidator(defaultConfig, profileForm);
 const cardFormValidator = new FormValidator(defaultConfig, addForm);
+const avatarEditValidator = new FormValidator(defaultConfig, editAvatarForm);
 
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+avatarEditValidator.enableValidation();
 
 
 /* PROFILE EDIT MODAL */
@@ -96,6 +113,7 @@ const editPopup = new PopupWithForm(".modal_type_edit-profile", {
     api.setUserInfo(inputValues)
       .then((userInfoResponse) => {
         new UserInfo(userInfoResponse);
+        editPopup.formIsSaving(false);
       });
   }
 });
@@ -114,6 +132,7 @@ const addCardPopup = new PopupWithForm(".modal_type_add-card", {
         api.addCard(submittedCardData)
           .then((cardData) => {
             cardRender(cardData, { user });
+            addCardPopup.formIsSaving(false);
           });
       });
   }
@@ -122,4 +141,8 @@ addCardPopup.setEventListeners();
 
 addCardBtn.addEventListener("click", () => {
   addCardPopup.open();
+});
+
+editAvatarBtn.addEventListener("click", () => {
+  editAvatarPopup.open();
 });

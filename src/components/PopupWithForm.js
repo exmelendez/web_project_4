@@ -5,6 +5,17 @@ class PopupWithForm extends Popup {
     super(popupSelector);
     this._formElement = this._popupElement.querySelector(".form");
     this._formHandle = handleFormSubmit;
+    this._formSaveBtn = this._formElement.querySelector(".form__save-btn");
+  }
+
+  formIsSaving(isSaving) {
+    if (isSaving) {
+      this._formSaveBtn.textContent = "Saving...";
+
+    } else {
+      this._formSaveBtn.textContent = "Save";
+      this.close();
+    }
   }
 
   close() {
@@ -16,7 +27,7 @@ class PopupWithForm extends Popup {
     this._formElement.addEventListener("submit", (e) => {
       e.preventDefault();
       this._formHandle(this._getInputValues());
-      this.close();
+      this.formIsSaving(true);
     });
     super.setEventListeners();
   }
@@ -24,8 +35,8 @@ class PopupWithForm extends Popup {
   _getInputValues() {
     const allInputs = Array.from(this._formElement.querySelectorAll(".form__input"));
     this._inputValues = {};
-    allInputs.forEach((input) => {this._inputValues[input.name] = input.value});
-    
+    allInputs.forEach((input) => { this._inputValues[input.name] = input.value });
+
     return this._inputValues;
   }
 }

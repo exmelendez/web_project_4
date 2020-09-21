@@ -17,7 +17,10 @@
   <main class="content">
 
     <section class="profile">
-      <img class="profile__avatar" src="./images/avatar_image-min.jpg" alt="account image">
+
+      <div class="profile__avatar">
+        <button class="profile__avatar-overlay"></button>
+      </div>
 
       <div class="profile__info">
         <p class="profile__name"></p>
@@ -93,6 +96,22 @@
       <h2 class="modal__title">Are you sure?</h2>
 
       <button class="modal__confirm-delete-btn" type="button" aria-label="Confirm Card Delete">Yes</button>
+    </div>
+  </div>
+
+  <!-- UPDATE AVATAR MODAL -->
+  <div class="modal modal_type_update-avatar">
+    <div class="modal__container modal__container_update-avatar">
+      <button class="modal__close-btn modal_close_confirm-delete" aria-label="Close popup">&plus;</button>
+      <h2 class="modal__title">Change profile picture</h2>
+
+      <form class="form form_type_edit-avatar">
+        <input id="card-url" class="form__input form__input_card-url" type="url" name="avatar" placeholder="Link"
+          required>
+        <span id="card-url-error" class="form__error"></span>
+
+        <button class="form__save-btn" aria-label="Save form">Save</button>
+      </form>
     </div>
   </div>
 
