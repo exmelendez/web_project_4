@@ -24,8 +24,12 @@ module.exports = {
         { loader: 'css-loader', options: { importLoaders: 1 } }, 'postcss-loader']
       },
       {
-        test: /\.(woff|woff2|svg|png|jpg)$/,
-        loader: 'file-loader'
+        test: /\.(png|svg|jpg|gif)$/,
+        loader: 'file-loader?name=./images/[name].[ext]'
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=./vendor/[name].[ext]'
       },
       {
         test: /\.html$/,
