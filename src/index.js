@@ -23,17 +23,6 @@ let sessionUser;
 const deleteCardPopup = new Popup(".modal_type_confirm-delete");
 deleteCardPopup.setEventListeners();
 
-const editAvatarPopup = new PopupWithForm(".modal_type_update-avatar", {
-  handleFormSubmit: (inputValues) => {
-    api.setUserAvatar(inputValues)
-      .then((res) => {
-        sessionUser.updateAvatar(res);
-        editAvatarPopup.formIsSaving(false);
-      })
-      .catch((err) => console.log(err));
-  }
-});
-
 /* Form Validator Objects */
 const editFormValidator = new FormValidator(defaultConfig, profileForm);
 const cardFormValidator = new FormValidator(defaultConfig, addForm);
@@ -42,8 +31,6 @@ const avatarEditValidator = new FormValidator(defaultConfig, editAvatarForm);
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 avatarEditValidator.enableValidation();
-
-editAvatarPopup.setEventListeners();
 
 /**
  * Renders cards + sets listeners
@@ -101,6 +88,7 @@ const cardRender = (cardData, { user }) => {
 api.getUserInfo()
   .then(user => {
     sessionUser = new UserInfo(user);
+    sessionUser.setUserInfo(user);
 
     api.getCardList().then((cardData) => {
       cardRender(cardData, { user });
@@ -109,12 +97,26 @@ api.getUserInfo()
   })
   .catch((err) => console.log(err));
 
+const editAvatarPopup = new PopupWithForm(".modal_type_update-avatar", {
+  handleFormSubmit: (inputValues) => {
+    api.setUserAvatar(inputValues)
+      .then((res) => {
+        sessionUser.updateAvatar(res);
+        editAvatarPopup.formIsSaving(false);
+      })
+      .catch((err) => console.log(err));
+  }
+});
+
+editAvatarPopup.setEventListeners();
+
 /* PROFILE EDIT MODAL */
 const editPopup = new PopupWithForm(".modal_type_edit-profile", {
   handleFormSubmit: (inputValues) => {
     api.setUserInfo(inputValues)
       .then((userInfoResponse) => {
-        new UserInfo(userInfoResponse);
+        // new UserInfo(userInfoResponse);
+        sessionUser.setUserInfo(userInfoResponse);
         editPopup.formIsSaving(false);
       })
       .catch((err) => console.log(err));
