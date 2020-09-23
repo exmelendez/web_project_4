@@ -9,10 +9,6 @@ class Section {
     this._classSelector.prepend(card);
   }
 
-  clear() {
-    this.classSelector.innerHTML = "";
-  }
-
   renderer() {
     this._cards.length > 1 ? this._cards.forEach(card => this._renderer(card)) : this._renderer(this._cards);
   }
