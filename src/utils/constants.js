@@ -2,6 +2,7 @@
 export const profileEditBtn = document.querySelector(".profile__edit-btn");
 export const addCardBtn = document.querySelector(".profile__add-btn");
 export const editAvatarBtn = document.querySelector(".profile__avatar-overlay");
+export const confirmDeleteBtn = document.querySelector(".modal__confirm-delete-btn");
 
 /* Modals */
 export const editModal = document.querySelector(".modal_type_edit-profile");

@@ -4,10 +4,21 @@ import Section from './components/Section.js';
 import PopupWithImage from './components/PopupWithImage.js';
 import PopupWithForm from './components/PopupWithForm.js';
 import UserInfo from './components/UserInfo.js';
-import { addCardBtn, addForm, defaultConfig, profileEditBtn, profileForm, editAvatarBtn, editAvatarModal, editAvatarForm } from './utils/constants.js';
+import { addCardBtn, addForm, defaultConfig, profileEditBtn, profileForm, editAvatarBtn, editAvatarModal, editAvatarForm, confirmDeleteBtn } from './utils/constants.js';
 import Api from './components/Api.js';
 import "./pages/index.css";
 import Popup from './components/Popup.js';
+
+/* CONSTANTS */
+const api = new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/group-4",
+  headers: {
+    authorization: "9d5a3bcf-ed42-48db-a52f-3430aec59f7e",
+    "Content-Type": "application/json"
+  }
+});
+
+let sessionUser;
 
 const deleteCardPopup = new Popup(".modal_type_confirm-delete");
 deleteCardPopup.setEventListeners();
@@ -18,13 +29,21 @@ const editAvatarPopup = new PopupWithForm(".modal_type_update-avatar", {
       .then((res) => {
         sessionUser.updateAvatar(res);
         editAvatarPopup.formIsSaving(false);
-      });
+      })
+      .catch((err) => console.log(err));
   }
 });
 
-editAvatarPopup.setEventListeners();
+/* Form Validator Objects */
+const editFormValidator = new FormValidator(defaultConfig, profileForm);
+const cardFormValidator = new FormValidator(defaultConfig, addForm);
+const avatarEditValidator = new FormValidator(defaultConfig, editAvatarForm);
 
-const confirmDeleteBtn = document.querySelector(".modal__confirm-delete-btn");
+editFormValidator.enableValidation();
+cardFormValidator.enableValidation();
+avatarEditValidator.enableValidation();
+
+editAvatarPopup.setEventListeners();
 
 /**
  * Renders cards + sets listeners
@@ -47,7 +66,8 @@ const cardRender = (cardData, { user }) => {
                 cardSetup.remove();
                 deleteCardPopup.close();
                 confirmDeleteBtn.removeEventListener("click", deleteHandler);
-              });
+              })
+              .catch((err) => console.log(err));
           };
 
           confirmDeleteBtn.addEventListener("click", deleteHandler);
@@ -58,7 +78,8 @@ const cardRender = (cardData, { user }) => {
             .then(card => {
               cardSetup.setLikeList(card.likes);
               cardSetup.toggleLikeBtn(cardSetup.isLikedByOwner(user._id));
-            });
+            })
+            .catch((err) => console.log(err));
         }
       });
 
@@ -76,16 +97,6 @@ const cardRender = (cardData, { user }) => {
   section.renderer();
 };
 
-const api = new Api({
-  baseUrl: "https://around.nomoreparties.co/v1/group-4",
-  headers: {
-    authorization: "9d5a3bcf-ed42-48db-a52f-3430aec59f7e",
-    "Content-Type": "application/json"
-  }
-});
-
-let sessionUser;
-
 /* INITIAL PAGE/CARD RENDER */
 api.getUserInfo()
   .then(user => {
@@ -93,19 +104,10 @@ api.getUserInfo()
 
     api.getCardList().then((cardData) => {
       cardRender(cardData, { user });
-    });
-  });
-
-
-/* Form Validator Objects */
-const editFormValidator = new FormValidator(defaultConfig, profileForm);
-const cardFormValidator = new FormValidator(defaultConfig, addForm);
-const avatarEditValidator = new FormValidator(defaultConfig, editAvatarForm);
-
-editFormValidator.enableValidation();
-cardFormValidator.enableValidation();
-avatarEditValidator.enableValidation();
-
+    })
+      .catch((err) => console.log(err));
+  })
+  .catch((err) => console.log(err));
 
 /* PROFILE EDIT MODAL */
 const editPopup = new PopupWithForm(".modal_type_edit-profile", {
@@ -114,7 +116,8 @@ const editPopup = new PopupWithForm(".modal_type_edit-profile", {
       .then((userInfoResponse) => {
         new UserInfo(userInfoResponse);
         editPopup.formIsSaving(false);
-      });
+      })
+      .catch((err) => console.log(err));
   }
 });
 
@@ -133,8 +136,10 @@ const addCardPopup = new PopupWithForm(".modal_type_add-card", {
           .then((cardData) => {
             cardRender(cardData, { user });
             addCardPopup.formIsSaving(false);
-          });
-      });
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   }
 });
 addCardPopup.setEventListeners();
