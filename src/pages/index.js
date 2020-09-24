@@ -92,7 +92,6 @@ api.getUserInfo()
   .then(user => {
     sessionUser = new UserInfo(user);
     sessionUser.setUserInfo(user);
-
     api.getCardList().then((cardData) => {
       cardRender(cardData, { user });
     })
@@ -102,6 +101,8 @@ api.getUserInfo()
 
 const editAvatarPopup = new PopupWithForm(".modal_type_update-avatar", {
   handleFormSubmit: (inputValues) => {
+    editAvatarPopup.submitBtnText("Saving . . .");
+
     api.setUserAvatar(inputValues)
       .then((res) => {
         sessionUser.updateAvatar(res);
@@ -129,6 +130,7 @@ const editPopup = new PopupWithForm(".modal_type_edit-profile", {
 
 editPopup.setEventListeners();
 profileEditBtn.addEventListener("click", () => {
+  editPopup.editModalPresetInputs(sessionUser.getUserInfo());
   editPopup.open();
 });
 
@@ -156,5 +158,6 @@ addCardBtn.addEventListener("click", () => {
 });
 
 editAvatarBtn.addEventListener("click", () => {
+  editAvatarPopup.avatarModalPresetInputs(sessionUser.getUserInfo());
   editAvatarPopup.open();
 });

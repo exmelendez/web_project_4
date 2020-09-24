@@ -17,6 +17,15 @@ class PopupWithForm extends Popup {
     this._deleteHandle();
   }
 
+  editModalPresetInputs({ name, about }) {
+    document.querySelector(".form__input-profile-name").value = name;
+    document.querySelector(".form__input-profile-title").value = about;
+  }
+
+  avatarModalPresetInputs({ avatar }) {
+    document.querySelector(".form__input_avatar-update").value = avatar;
+  }
+
   submitBtnText(text) {
     this._formSaveBtn.textContent = text;
   }
