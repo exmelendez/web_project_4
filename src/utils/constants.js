@@ -2,12 +2,11 @@
 export const profileEditBtn = document.querySelector(".profile__edit-btn");
 export const addCardBtn = document.querySelector(".profile__add-btn");
 export const editAvatarBtn = document.querySelector(".profile__avatar-overlay");
-export const confirmDeleteBtn = document.querySelector(".modal__confirm-delete-btn");
 
 /* Modals */
-export const editModal = document.querySelector(".modal_type_edit-profile");
-export const addModal = document.querySelector(".modal_type_add-card");
-export const editAvatarModal = document.querySelector(".modal_type_update-avatar");
+const editModal = document.querySelector(".modal_type_edit-profile");
+const addModal = document.querySelector(".modal_type_add-card");
+const editAvatarModal = document.querySelector(".modal_type_update-avatar");
 
 /* Forms */
 export const profileForm = editModal.querySelector(".form_type_edit-profile");

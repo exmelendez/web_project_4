@@ -8,26 +8,34 @@ class PopupWithForm extends Popup {
     this._formSaveBtn = this._formElement.querySelector(".form__save-btn");
   }
 
-  formIsSaving(isSaving) {
-    if (isSaving) {
-      this._formSaveBtn.textContent = "Saving...";
-
-    } else {
-      this._formSaveBtn.textContent = "Save";
-      this.close();
-    }
-  }
-
   close() {
     this._formElement.reset();
     super.close();
   }
 
+  deleteHandler() {
+    this._deleteHandle();
+  }
+
+  submitBtnText(text) {
+    this._formSaveBtn.textContent = text;
+  }
+
+  setDeleteHandler(deleteHandle, cardId) {
+    this._deleteHandle = deleteHandle;
+    this._cardId = cardId;
+  }
+
   setEventListeners() {
     this._formElement.addEventListener("submit", (e) => {
       e.preventDefault();
-      this._formHandle(this._getInputValues());
-      this.formIsSaving(true);
+
+      if (this._formElement.classList.contains('form_type_confirm-delete')) {
+        this._formHandle(this._cardId);
+      } else {
+        this._formHandle(this._getInputValues());
+        this.submitBtnText("Saving . . .");
+      }
     });
     super.setEventListeners();
   }

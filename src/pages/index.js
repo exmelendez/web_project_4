@@ -1,13 +1,12 @@
 import FormValidator from '../components/FormValidator.js';
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
-import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
-import { addCardBtn, addForm, defaultConfig, profileEditBtn, profileForm, editAvatarBtn, editAvatarModal, editAvatarForm, confirmDeleteBtn } from '../utils/constants.js';
+import { addCardBtn, addForm, defaultConfig, profileEditBtn, profileForm, editAvatarBtn, editAvatarForm } from '../utils/constants.js';
 import Api from '../components/Api.js';
 import "./index.css";
-import Popup from '../components/Popup.js';
 
 /* CONSTANTS */
 const api = new Api({
@@ -20,7 +19,20 @@ const api = new Api({
 
 let sessionUser;
 
-const deleteCardPopup = new Popup(".modal_type_confirm-delete");
+const deleteCardPopup = new PopupWithForm(".modal_type_confirm-delete", {
+  handleFormSubmit: (cardId) => {
+    deleteCardPopup.submitBtnText("Deleting . . .");
+
+    api.removeCard(cardId)
+      .then((res) => {
+        deleteCardPopup.deleteHandler();
+        deleteCardPopup.submitBtnText("Yes");
+        deleteCardPopup.close();
+      })
+      .catch((err) => console.log(err));
+  }
+});
+
 deleteCardPopup.setEventListeners();
 
 /* Form Validator Objects */
@@ -46,19 +58,10 @@ const cardRender = (cardData, { user }) => {
         handleCardClick: () => {
           cardImagePopup.open(cardData);
         },
-        deleteCardBtn: () => {
-          const deleteHandler = () => {
-            api.removeCard(cardSetup.getId())
-              .then(() => {
-                cardSetup.remove();
-                deleteCardPopup.close();
-                confirmDeleteBtn.removeEventListener("click", deleteHandler);
-              })
-              .catch((err) => console.log(err));
-          };
-
-          confirmDeleteBtn.addEventListener("click", deleteHandler);
+        deleteCardBtn: (cardId) => {
           deleteCardPopup.open();
+          deleteCardPopup.setDeleteHandler(() => { cardSetup.remove(); }, cardId);
+
         },
         handleLike: (cardId) => {
           api.changeLikeCardStatus(cardId, cardSetup.isLikedByOwner(user._id))
@@ -102,7 +105,8 @@ const editAvatarPopup = new PopupWithForm(".modal_type_update-avatar", {
     api.setUserAvatar(inputValues)
       .then((res) => {
         sessionUser.updateAvatar(res);
-        editAvatarPopup.formIsSaving(false);
+        editAvatarPopup.submitBtnText("Save");
+        editAvatarPopup.close();
       })
       .catch((err) => console.log(err));
   }
@@ -115,9 +119,9 @@ const editPopup = new PopupWithForm(".modal_type_edit-profile", {
   handleFormSubmit: (inputValues) => {
     api.setUserInfo(inputValues)
       .then((userInfoResponse) => {
-        // new UserInfo(userInfoResponse);
         sessionUser.setUserInfo(userInfoResponse);
-        editPopup.formIsSaving(false);
+        editPopup.submitBtnText("Save");
+        editPopup.close();
       })
       .catch((err) => console.log(err));
   }
@@ -137,7 +141,8 @@ const addCardPopup = new PopupWithForm(".modal_type_add-card", {
         api.addCard(submittedCardData)
           .then((cardData) => {
             cardRender(cardData, { user });
-            addCardPopup.formIsSaving(false);
+            addCardPopup.submitBtnText("Save");
+            addCardPopup.close();
           })
           .catch((err) => console.log(err));
       })

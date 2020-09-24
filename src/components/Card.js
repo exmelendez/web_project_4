@@ -17,7 +17,7 @@ class Card {
       this._cardDeleteBtn.classList.add("photos__delete-btn_visible");
       this._cardDeleteBtn.style.cursor = "pointer";
 
-      this._cardDeleteBtn.addEventListener("click", () => this._deleteClickBtn());
+      this._cardDeleteBtn.addEventListener("click", () => this._deleteClickBtn(this._id));
     }
   }
 
