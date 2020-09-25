@@ -35,6 +35,10 @@ const deleteCardPopup = new PopupWithForm(".modal_type_confirm-delete", {
 
 deleteCardPopup.setEventListeners();
 
+const cardImagePopup = new PopupWithImage(".modal_type_image-view");
+
+cardImagePopup.setEventListeners();
+
 /* Form Validator Objects */
 const editFormValidator = new FormValidator(defaultConfig, profileForm);
 const cardFormValidator = new FormValidator(defaultConfig, addForm);
@@ -49,7 +53,7 @@ avatarEditValidator.enableValidation();
  * @param {object} cardData card object response from API
  * @param {object} user user object response from API
  */
-const cardRender = (cardData, { user }) => {
+const cardRender = (cardData, user) => {
   const section = new Section({
     cardData,
     renderer: (cardData) => {
@@ -77,9 +81,6 @@ const cardRender = (cardData, { user }) => {
       cardSetup.activateTrashBtn(user._id);
       cardSetup.toggleLikeBtn(cardSetup.isLikedByOwner(user._id));
 
-      const cardImagePopup = new PopupWithImage(".modal_type_image-view");
-      cardImagePopup.setEventListeners();
-
       section.addItem(card);
     }
   }, ".photos__grid");
@@ -90,10 +91,10 @@ const cardRender = (cardData, { user }) => {
 /* INITIAL PAGE/CARD RENDER */
 api.getUserInfo()
   .then(user => {
-    sessionUser = new UserInfo(user);
+    sessionUser = new UserInfo();
     sessionUser.setUserInfo(user);
     api.getCardList().then((cardData) => {
-      cardRender(cardData, { user });
+      cardRender(cardData, user);
     })
       .catch((err) => console.log(err));
   })
@@ -137,16 +138,11 @@ profileEditBtn.addEventListener("click", () => {
 /* ADD CARD MODAL */
 const addCardPopup = new PopupWithForm(".modal_type_add-card", {
   handleFormSubmit: (submittedCardData) => {
-
-    api.getUserInfo()
-      .then(user => {
-        api.addCard(submittedCardData)
-          .then((cardData) => {
-            cardRender(cardData, { user });
-            addCardPopup.submitBtnText("Save");
-            addCardPopup.close();
-          })
-          .catch((err) => console.log(err));
+    api.addCard(submittedCardData)
+      .then((cardData) => {
+        cardRender(cardData, sessionUser.getUserInfo());
+        addCardPopup.submitBtnText("Save");
+        addCardPopup.close();
       })
       .catch((err) => console.log(err));
   }
