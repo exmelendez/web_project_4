@@ -15,7 +15,7 @@ This is a single page project title *Around The U.S.* The page is an interactive
 * BEM file structure organization
 * CSS Flexbox property
 * CSS Grid property 
-* CSS transition property
+* CSS Transition property
 * JavaScript Modal/Form popup-display
 * JavaScript Modal/Form input focus
 * JavaScript Form Validation
